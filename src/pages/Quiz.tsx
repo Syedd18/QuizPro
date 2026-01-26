@@ -7,6 +7,7 @@ import { ProgressBar } from '../components/ProgressBar';
 import { Alert } from '../components/Alert';
 import { useTimer } from '../hooks/useTimer';
 import { useLocalStorage } from '../hooks/useLocalStorage';
+import { useAuth } from '../contexts/AuthContext';
 import { quizService, questionService, attemptService } from '../lib/database';
 import type { Quiz as QuizType, Question } from '../lib/database';
 
@@ -18,6 +19,7 @@ interface Answer {
 export const Quiz: React.FC = () => {
   const { quizId } = useParams<{ quizId: string }>();
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useLocalStorage<Answer[]>(`quiz_${quizId}_answers`, []);
@@ -35,7 +37,7 @@ export const Quiz: React.FC = () => {
   }, [quizId]);
 
   const loadQuizData = async () => {
-    if (!quizId) return;
+    if (!quizId || !user?.id) return;
     try {
       setLoading(true);
       const quizData = await quizService.getQuizById(quizId);
@@ -44,9 +46,8 @@ export const Quiz: React.FC = () => {
       setQuiz(quizData);
       setQuestions(questionsData || []);
 
-      // Start a quiz attempt
-      const studentId = '00000000-0000-0000-0000-000000000002'; // Mock student ID
-      const attempt = await attemptService.startAttempt(studentId, quizId);
+      // Start a quiz attempt with current user's ID
+      const attempt = await attemptService.startAttempt(user.id, quizId);
       setAttemptId(attempt.id);
     } catch (err) {
       console.error('Failed to load quiz:', err);
