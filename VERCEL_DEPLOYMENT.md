@@ -23,12 +23,17 @@
    - Select "Other" as framework preset (Vite is auto-detected)
 
 4. **Set environment variables in Vercel Dashboard**
-   - Go to Project Settings → Environment Variables
-   - Add:
-     ```
-     VITE_SUPABASE_URL = your_supabase_url
-     VITE_SUPABASE_ANON_KEY = your_supabase_key
-     ```
+   - Go to [vercel.com](https://vercel.com) → Select QuizPro project
+   - Navigate to Settings → Environment Variables
+   - Add the following variables:
+     - Name: `VITE_SUPABASE_URL`
+     - Value: Your Supabase project URL
+     - Select: Production, Preview, Development (all environments)
+     - Click Save
+   - Click Add another variable and repeat for:
+     - Name: `VITE_SUPABASE_ANON_KEY`
+     - Value: Your Supabase public/anon key
+   - Redeploy the project for changes to take effect
 
 ### Option 2: Deploy via GitHub Integration
 
@@ -42,13 +47,14 @@
    - Click "New Project"
    - Import from GitHub → Select `Syedd18/QuizPro`
    - Vercel will auto-detect Vite configuration
-   - Add Environment Variables:
-     ```
-     VITE_SUPABASE_URL
-     VITE_SUPABASE_ANON_KEY
-     ```
 
-3. **Deploy**
+3. **Add Environment Variables**
+   - In the "Environment Variables" section, add:
+     - Name: `VITE_SUPABASE_URL` → Value: Your Supabase project URL
+     - Name: `VITE_SUPABASE_ANON_KEY` → Value: Your Supabase anon key
+   - Select all environments (Production, Preview, Development)
+
+4. **Deploy**
    - Click "Deploy"
    - Every push to `main` branch will auto-deploy
 
@@ -88,11 +94,19 @@
    ```
 
 ### For Vercel Deployment
-1. Open Vercel Dashboard
-2. Select QuizPro project
-3. Settings → Environment Variables
-4. Add both `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`
-5. Redeploy to apply changes
+1. Open Vercel Dashboard → Select QuizPro project
+2. Go to Settings → Environment Variables
+3. Click "Add New" and enter:
+   - **Name**: `VITE_SUPABASE_URL`
+   - **Value**: `https://your-project.supabase.co`
+   - **Environments**: Select Production, Preview, and Development
+   - Click "Save"
+4. Repeat for `VITE_SUPABASE_ANON_KEY`:
+   - **Name**: `VITE_SUPABASE_ANON_KEY`
+   - **Value**: Your anon key from Supabase
+   - **Environments**: All
+5. Go to Deployments tab and click "Redeploy" on the latest deployment
+6. Variables are now active
 
 ## Build & Preview Locally
 
