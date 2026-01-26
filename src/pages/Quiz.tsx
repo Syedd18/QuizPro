@@ -28,7 +28,6 @@ export const Quiz: React.FC = () => {
   const [quiz, setQuiz] = useState<QuizType | null>(null);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [attemptId, setAttemptId] = useState<string | null>(null);
-  const [timer, setTimer] = useState<ReturnType<typeof useTimer> | null>(null);
 
   // Load quiz and questions from database
   useEffect(() => {
@@ -59,35 +58,41 @@ export const Quiz: React.FC = () => {
 
   const currentQuestion = questions[currentQuestionIndex];
 
-  // Only initialize timer after quiz is loaded
-  const timerHook = useTimer(
-    quiz ? quiz.time_limit * 60 : 3600, // Default to 1 hour if quiz not loaded yet
+  // Initialize timer with quiz time limit
+  const timer = useTimer(
+    quiz ? quiz.time_limit * 60 : 5 * 60,
     () => {
+      // Auto-submit when time expires
       setSubmitted(true);
       setShowWarning(true);
     }
   );
 
+  // Auto-start timer when quiz loads
   useEffect(() => {
-    if (quiz && !timer) {
-      // Initialize timer only once when quiz loads
-      setTimer(timerHook);
-      timerHook.reset(quiz.time_limit * 60);
-      timerHook.start();
-      window.addEventListener('beforeunload', handleBeforeUnload);
-      return () => {
-        window.removeEventListener('beforeunload', handleBeforeUnload);
-        timerHook.pause();
-      };
+    if (quiz && !submitted) {
+      timer.reset(quiz.time_limit * 60);
+      // Small delay to ensure state updates
+      const startTimer = setTimeout(() => {
+        timer.start();
+      }, 100);
+      
+      return () => clearTimeout(startTimer);
     }
-  }, [quiz, timer]);
+  }, [quiz?.id, submitted]);
 
-  const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-    if (!submitted) {
-      e.preventDefault();
-      e.returnValue = '';
-    }
-  };
+  // Warn user before leaving if quiz is active
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (!submitted && timer.isActive) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [submitted, timer.isActive]);
 
   const handleSelectOption = (option: string) => {
     if (submitted) return;
@@ -116,9 +121,8 @@ export const Quiz: React.FC = () => {
   };
 
   const handleSubmit = async () => {
-    if (timer) {
-      timer.pause();
-    }
+    // Stop the timer
+    timer.pause();
     setSubmitted(true);
 
     try {
@@ -206,7 +210,7 @@ export const Quiz: React.FC = () => {
     <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 transition-colors duration-300">
       {/* Header */}
       <header className="bg-white dark:bg-neutral-800 border-b border-neutral-200 dark:border-neutral-700 sticky top-0 z-20 transition-colors duration-300">
-        <div className="container-max py-2.5 sm:py-4">
+        <div className="container-max px-3 sm:px-6 py-2.5 sm:py-4">
           <div className="flex items-center justify-between gap-2 sm:gap-4">
             <div className="flex items-center gap-1.5 sm:gap-3 min-w-0 flex-1">
               <Button
@@ -223,22 +227,24 @@ export const Quiz: React.FC = () => {
                 <span className="hidden sm:inline text-xs sm:text-sm">Back</span>
               </Button>
               <div className="min-w-0 flex-1">
-                <h1 className="font-semibold text-xs sm:text-base text-neutral-900 dark:text-white truncate">{quiz.title}</h1>
+                <h1 className="font-semibold text-xs sm:text-sm md:text-base text-neutral-900 dark:text-white truncate">{quiz.title}</h1>
                 <p className="text-xs text-neutral-600 dark:text-neutral-400">Q {currentQuestionIndex + 1}/{questions.length}</p>
               </div>
             </div>
 
-            <Timer 
-              minutes={timer?.minutes ?? 0} 
-              seconds={timer?.displaySeconds ?? 0} 
-              isExpired={timer?.isExpired ?? false} 
-            />
+            <div className="flex-shrink-0">
+              <Timer 
+                minutes={timer?.minutes ?? 0} 
+                seconds={timer?.displaySeconds ?? 0} 
+                isExpired={timer?.isExpired ?? false} 
+              />
+            </div>
           </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="container-max py-3 sm:py-8">
+      <main className="container-max px-3 sm:px-6 py-4 sm:py-8">
         {showWarning && timer?.isExpired && (
           <Alert
             type="warning"
