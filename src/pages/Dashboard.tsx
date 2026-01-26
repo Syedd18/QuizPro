@@ -128,7 +128,7 @@ export const Dashboard: React.FC = () => {
               size="sm"
               icon={<History size={16} />}
               onClick={() => navigate('/history')}
-              className="hidden sm:flex"
+              aria-label="View quiz history"
             >
               <span className="hidden md:inline">History</span>
             </Button>
