@@ -10,63 +10,78 @@ export const Home: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-primary-50 dark:from-neutral-950 dark:via-neutral-900 dark:to-neutral-950 transition-colors duration-300">
       {/* Navigation */}
       <header className="sticky top-0 z-10 bg-white/80 dark:bg-neutral-800/80 backdrop-blur-md border-b border-neutral-200 dark:border-neutral-700 transition-colors duration-300">
-        <div className="container-max py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-primary-600 dark:bg-primary-700 rounded-lg flex items-center justify-center">
-              <BookOpen size={24} className="text-white" />
+        <div className="container-max py-3 sm:py-4 px-3 sm:px-6 flex items-center justify-between gap-2 sm:gap-4">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="w-9 sm:w-10 h-9 sm:h-10 bg-primary-600 dark:bg-primary-700 rounded-lg flex items-center justify-center flex-shrink-0">
+              <BookOpen size={20} className="text-white" />
             </div>
-            <span className="text-2xl font-bold text-neutral-900 dark:text-white">QuizPro</span>
+            <span className="text-lg sm:text-2xl font-bold text-neutral-900 dark:text-white">QuizPro</span>
           </div>
 
-          <div className="flex items-center gap-3 sm:gap-4">
+          <div className="flex items-center gap-1.5 sm:gap-4">
             <ThemeToggle />
             <Button
               variant="outline"
+              size="sm"
               onClick={() => navigate('/login')}
+              className="hidden sm:flex"
             >
-              Student Login
+              Login
             </Button>
             <Button
               variant="primary"
+              size="sm"
               onClick={() => navigate('/register')}
+              className="hidden md:flex"
             >
-              Student SignUp
+              SignUp
+            </Button>
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={() => navigate('/register')}
+              className="md:hidden"
+            >
+              Start
             </Button>
             <Button
               variant="outline"
+              size="sm"
               onClick={() => navigate('/admin/login')}
-              className="text-red-600 border-red-600 hover:bg-red-50 dark:text-red-400 dark:border-red-400"
+              className="text-red-600 border-red-600 hover:bg-red-50 dark:text-red-400 dark:border-red-400 hidden sm:flex"
             >
-              Admin Portal
+              Admin
             </Button>
           </div>
         </div>
       </header>
 
       {/* Hero Section */}
-      <main className="container-max py-16 sm:py-20 lg:py-32">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center mb-20">
+      <main className="container-max px-3 sm:px-6 py-8 sm:py-16 md:py-20 lg:py-32">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center mb-12 sm:mb-20">
           <div className="animate-fade-in">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-neutral-900 dark:text-white mb-4 sm:mb-6 leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 dark:text-white mb-3 sm:mb-4 md:mb-6 leading-tight">
               Take Control of Your Learning
             </h1>
-            <p className="text-lg sm:text-xl text-neutral-600 dark:text-neutral-300 mb-6 sm:mb-8 leading-relaxed max-w-xl">
+            <p className="text-base sm:text-lg md:text-xl text-neutral-600 dark:text-neutral-300 mb-4 sm:mb-6 md:mb-8 leading-relaxed max-w-xl">
               QuizPro is a modern, intuitive quiz platform designed for educational excellence. 
               Create, manage, and take quizzes with an industry-grade user experience.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+            <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 md:gap-4">
               <Button
                 variant="primary"
-                size="lg"
+                size="md"
                 onClick={() => navigate('/register')}
+                className="w-full sm:w-auto"
               >
-                Start Learning Today
+                Start Learning
               </Button>
               <Button
                 variant="outline"
-                size="lg"
+                size="md"
                 onClick={() => navigate('/login')}
+                className="w-full sm:w-auto"
               >
                 Sign In
               </Button>
@@ -165,7 +180,7 @@ export const Home: React.FC = () => {
       {/* Footer */}
       <footer className="border-t border-neutral-200 dark:border-neutral-700 mt-16 sm:mt-20 bg-neutral-50 dark:bg-neutral-900 transition-colors duration-300">
         <div className="container-max py-8 text-center text-neutral-600 dark:text-neutral-400 text-sm">
-          <p>© 2024 QuizPro. Built for educational excellence. All rights reserved.</p>
+          <p>© 2026 QuizPro. Made by Anany Singh</p>
         </div>
       </footer>
     </div>
