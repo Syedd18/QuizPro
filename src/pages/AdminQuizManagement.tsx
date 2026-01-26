@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, LogOut, Plus, Edit2, Trash2, Eye, EyeOff, Loader, ArrowLeft } from 'lucide-react';
+import { BookOpen, LogOut, Plus, Edit2, Trash2, Eye, EyeOff, Loader, ArrowLeft, BarChart3 } from 'lucide-react';
 import { Button } from '../components/Button';
 import { ThemeToggle } from '../components/ThemeToggle';
 import { quizService, Quiz } from '../lib/database';
@@ -166,6 +166,14 @@ export const AdminQuizManagement: React.FC = () => {
                 </div>
 
                 <div className="flex gap-2">
+                  <button
+                    onClick={() => navigate(`/admin/quiz/${quiz.id}/results`)}
+                    className="flex-1 p-2 hover:bg-neutral-100 dark:hover:bg-neutral-700 rounded transition"
+                    title="View student results"
+                  >
+                    <BarChart3 size={18} className="text-purple-600 dark:text-purple-400 mx-auto" />
+                  </button>
+
                   <button
                     onClick={() => togglePublish(quiz.id, quiz.is_published)}
                     className="flex-1 p-2 hover:bg-neutral-100 dark:hover:bg-neutral-700 rounded transition"

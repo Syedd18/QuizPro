@@ -31,9 +31,13 @@ export const QuizHistory: React.FC = () => {
   const loadAttempts = async () => {
     try {
       setLoading(true);
-      // Fetch attempts for the mock student ID
-      const studentId = '00000000-0000-0000-0000-000000000002';
-      const attemptsData = await attemptService.getStudentAttempts(studentId);
+      // Fetch attempts for the current logged-in user
+      if (!user?.id) {
+        setError('User not authenticated');
+        return;
+      }
+
+      const attemptsData = await attemptService.getStudentAttempts(user.id);
 
       if (!attemptsData || attemptsData.length === 0) {
         setAttempts([]);

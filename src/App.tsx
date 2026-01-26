@@ -9,6 +9,7 @@ import { QuizHistory } from './pages/QuizHistory';
 import { AdminLogin } from './pages/AdminLogin';
 import { AdminDashboard } from './pages/AdminDashboard';
 import { AdminQuizManagement } from './pages/AdminQuizManagement';
+import { AdminQuizResults } from './pages/AdminQuizResults';
 import { CreateQuiz } from './pages/CreateQuiz';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { ThemeProvider } from './contexts/ThemeContext';
@@ -46,6 +47,7 @@ function App() {
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/admin/quizzes" element={<AdminQuizManagement />} />
+            <Route path="/admin/quiz/:quizId/results" element={<AdminQuizResults />} />
             <Route path="/admin/quiz/create" element={<CreateQuiz />} />
 
             {/* Protected Student Routes */}
