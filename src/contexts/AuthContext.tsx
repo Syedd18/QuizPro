@@ -77,17 +77,29 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signUp = async (email: string, password: string, name: string) => {
     try {
       setError(null);
-      const { error } = await supabase.auth.signUp({
+      // Sign up without email confirmation required
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
           data: {
             name,
           },
+          emailRedirectTo: undefined, // No confirmation email redirect needed
         },
       });
       
       if (error) throw error;
+
+      // Auto-sign in the user immediately after signup
+      if (data.user) {
+        const { error: signInError } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+        
+        if (signInError) throw signInError;
+      }
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Sign up failed';
       setError(message);
@@ -104,15 +116,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
       
       if (error) {
-        // Check if user is not confirmed
-        if (error.message.includes('Email not confirmed')) {
-          throw new Error('Please confirm your email first. Check your inbox for the confirmation link.');
-        }
         throw error;
-      }
-
-      if (data.user && !data.user.email_confirmed_at) {
-        throw new Error('Please confirm your email first. Check your inbox for the confirmation link.');
       }
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Sign in failed';

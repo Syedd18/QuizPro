@@ -51,10 +51,10 @@ export const Register: React.FC = () => {
       if (hasErrors) return;
 
       try {
-        // Sign up with Supabase
+        // Sign up with Supabase - will auto-sign in
         await signUp(values.email, values.password, values.name);
-        setAlert({ type: 'success', message: 'Account created successfully! Redirecting to email confirmation...' });
-        setTimeout(() => navigate('/confirm-email'), 2000);
+        setAlert({ type: 'success', message: 'Account created successfully! Redirecting to dashboard...' });
+        setTimeout(() => navigate('/dashboard'), 2000);
       } catch (err) {
         const message = err instanceof Error ? err.message : 'Registration failed. Please try again.';
         setAlert({ type: 'error', message });
