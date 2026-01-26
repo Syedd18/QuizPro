@@ -4,10 +4,15 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
-    port: 3000,
+    port: 3001,
     open: true
   },
   build: {
+    outDir: 'dist',
+    sourcemap: false,
+    minify: 'terser',
+    cssMinify: true,
+    reportCompressedSize: true,
     rollupOptions: {
       output: {
         manualChunks: {
@@ -18,10 +23,10 @@ export default defineConfig({
           'results': ['./src/pages/Results'],
         }
       }
-    },
-    minify: 'terser',
-    cssMinify: true,
-    sourcemap: false,
-    reportCompressedSize: true,
+    }
+  },
+  preview: {
+    port: 4173,
+    strictPort: false
   }
 })
