@@ -161,18 +161,18 @@ export const Home: React.FC = () => {
         </div>
 
         {/* CTA Section */}
-        <div className="bg-gradient-to-r from-primary-600 to-primary-700 dark:from-primary-700 dark:to-primary-800 rounded-2xl p-8 sm:p-12 text-center text-white shadow-medium dark:shadow-lg dark:shadow-primary-900/30 transition-colors duration-300">
+        <div className="bg-gradient-to-r from-primary-600 to-primary-700 dark:from-primary-500 dark:to-blue-600 rounded-2xl p-8 sm:p-12 text-center text-white shadow-medium dark:shadow-lg dark:shadow-primary-900/40 transition-colors duration-300">
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">Ready to Get Started?</h2>
-          <p className="text-primary-100 dark:text-primary-200 mb-6 sm:mb-8 text-lg max-w-2xl mx-auto px-4">
+          <p className="text-primary-100 dark:text-primary-100 mb-6 sm:mb-8 text-lg max-w-2xl mx-auto px-4">
             Join thousands of students taking quizzes on QuizPro. Sign up today and start your learning journey.
           </p>
           <Button
-            variant="primary"
+            variant="ghost"
             size="lg"
             onClick={() => navigate('/register')}
-            className="bg-white text-primary-600 hover:bg-primary-50"
+            className="bg-white dark:bg-white text-primary-600 dark:text-primary-700 hover:bg-neutral-100 dark:hover:bg-neutral-50 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 min-h-[56px]"
           >
-            Create Your Account <ArrowRight size={20} />
+            Create Your Account <ArrowRight size={22} />
           </Button>
         </div>
       </main>
