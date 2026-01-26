@@ -29,8 +29,8 @@ export const FormInput: React.FC<FormInputProps> = ({
   const isPassword = type === 'password';
 
   return (
-    <div className="mb-6 group">
-      <label htmlFor={name} className="block text-sm font-semibold text-neutral-900 dark:text-white mb-3 group-focus-within:text-primary-600 dark:group-focus-within:text-primary-400 transition-colors duration-300">
+    <div className="mb-4 sm:mb-6 group">
+      <label htmlFor={name} className="block text-sm sm:text-base font-semibold text-neutral-900 dark:text-white mb-2 sm:mb-3 group-focus-within:text-primary-600 dark:group-focus-within:text-primary-400 transition-colors duration-300">
         {label}
         {required && <span className="text-red-500 ml-1">*</span>}
       </label>
@@ -45,7 +45,7 @@ export const FormInput: React.FC<FormInputProps> = ({
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
           autoComplete={autoComplete}
-          className={`input-field ${error ? 'input-error' : ''} transition-all duration-200`}
+          className={`input-field ${error ? 'input-error' : ''} transition-all duration-200 text-base sm:text-base`}
           aria-invalid={!!error}
           aria-describedby={error ? `${name}-error` : undefined}
         />
@@ -53,7 +53,7 @@ export const FormInput: React.FC<FormInputProps> = ({
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-600 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400 transition-all duration-200 p-1 rounded-lg hover:bg-primary-50 dark:hover:bg-primary-900/20"
+            className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 text-neutral-600 hover:text-primary-600 dark:text-neutral-400 dark:hover:text-primary-400 transition-all duration-200 p-2 rounded-lg hover:bg-primary-50 dark:hover:bg-primary-900/20 min-h-[44px] min-w-[44px] flex items-center justify-center"
             aria-label={showPassword ? 'Hide password' : 'Show password'}
           >
             {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}

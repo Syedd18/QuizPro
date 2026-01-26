@@ -59,7 +59,7 @@ export const AdminLogin: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-50 to-neutral-50 dark:from-neutral-950 dark:to-neutral-900 flex flex-col items-center justify-center p-3 sm:p-4 transition-colors duration-300">
+    <div className="min-h-screen bg-gradient-to-br from-red-50 to-neutral-50 dark:from-neutral-950 dark:to-neutral-900 flex flex-col items-center justify-center px-3 py-8 sm:p-4 transition-colors duration-300">
       {/* Back button - top left */}
       <div className="absolute top-3 sm:top-4 left-3 sm:left-4">
         <Button
@@ -77,22 +77,22 @@ export const AdminLogin: React.FC = () => {
         <ThemeToggle />
       </div>
 
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-sm sm:max-w-md">
         {/* Header */}
-        <div className="text-center mb-6 sm:mb-8">
-          <div className="flex items-center justify-center gap-2 mb-3 sm:mb-4">
+        <div className="text-center mb-4 sm:mb-8">
+          <div className="flex items-center justify-center gap-2 mb-2 sm:mb-4">
             <div className="w-8 sm:w-10 h-8 sm:h-10 bg-red-600 dark:bg-red-700 rounded-lg flex items-center justify-center flex-shrink-0">
               <BookOpen size={20} className="sm:w-6 sm:h-6 text-white" />
             </div>
-            <span className="text-xl sm:text-2xl font-bold text-neutral-900 dark:text-white truncate">QuizPro</span>
+            <span className="text-lg sm:text-2xl font-bold text-neutral-900 dark:text-white truncate">QuizPro</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-neutral-900 dark:text-white mb-1 sm:mb-2">Admin Portal</h1>
-          <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">Manage quizzes, students, and results</p>
+          <h1 className="text-xl sm:text-3xl font-bold text-neutral-900 dark:text-white mb-1">Admin Portal</h1>
+          <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">Manage quizzes and results</p>
         </div>
 
         {/* Alert */}
         {error && (
-          <div className="mb-4 sm:mb-6">
+          <div className="mb-3 sm:mb-6">
             <Alert
               type="error"
               title="Authentication Error"
@@ -103,19 +103,19 @@ export const AdminLogin: React.FC = () => {
         )}
 
         {/* Default Credentials Info */}
-        <div className="mb-4 sm:mb-6 p-3 sm:p-4 bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-lg">
-          <div className="flex gap-2 sm:gap-3">
-            <AlertCircle size={18} className="sm:w-5 sm:h-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
-            <div className="text-xs sm:text-sm text-blue-700 dark:text-blue-300">
-              <p className="font-semibold mb-0.5 sm:mb-1">Demo Credentials</p>
-              <p><strong>Username:</strong> admin</p>
-              <p><strong>Password:</strong> admin123</p>
+        <div className="mb-3 sm:mb-6 p-2.5 sm:p-4 bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-lg">
+          <div className="flex gap-2">
+            <AlertCircle size={16} className="sm:w-5 sm:h-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
+            <div className="text-xs sm:text-sm text-blue-700 dark:text-blue-300 min-w-0">
+              <p className="font-semibold mb-0.5">Demo Credentials</p>
+              <p className="truncate"><strong>Username:</strong> admin</p>
+              <p className="truncate"><strong>Password:</strong> admin123</p>
             </div>
           </div>
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="card p-4 sm:p-8 space-y-4 sm:space-y-6">
+        <form onSubmit={handleSubmit} className="card p-3 sm:p-8 space-y-3 sm:space-y-6">
           <FormInput
             label="Username"
             type="text"
@@ -140,21 +140,22 @@ export const AdminLogin: React.FC = () => {
             variant="primary"
             type="submit"
             disabled={loading}
+            size="md"
             className="w-full"
           >
-            {loading ? 'Logging in...' : 'Login to Admin Portal'}
+            {loading ? 'Logging in...' : 'Login'}
           </Button>
         </form>
 
         {/* Footer */}
-        <div className="mt-4 sm:mt-6 text-center">
+        <div className="mt-3 sm:mt-6 text-center">
           <p className="text-neutral-600 dark:text-neutral-400 text-xs sm:text-sm">
-            Are you a student?{' '}
+            Student?{' '}
             <button
               onClick={() => navigate('/login')}
               className="text-primary-600 dark:text-primary-400 hover:underline font-semibold"
             >
-              Student Login
+              Login here
             </button>
           </p>
         </div>

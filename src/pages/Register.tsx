@@ -63,13 +63,13 @@ export const Register: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-neutral-50/50 dark:from-neutral-950 dark:via-neutral-900 dark:to-neutral-950/50 flex flex-col items-center justify-center p-4 transition-colors duration-300 relative overflow-hidden" style={{ backgroundAttachment: 'fixed' }}>
+    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-neutral-50/50 dark:from-neutral-950 dark:via-neutral-900 dark:to-neutral-950/50 flex flex-col items-center justify-center px-3 py-8 sm:p-4 transition-colors duration-300 relative overflow-hidden" style={{ backgroundAttachment: 'fixed' }}>
       {/* Decorative elements */}
-      <div className="absolute top-10 left-10 w-72 h-72 bg-primary-300/10 dark:bg-primary-500/5 rounded-full blur-3xl opacity-60 animate-float"></div>
-      <div className="absolute bottom-10 right-10 w-96 h-96 bg-blue-300/10 dark:bg-blue-500/5 rounded-full blur-3xl opacity-60 animate-float" style={{ animationDelay: '2s' }}></div>
+      <div className="absolute top-10 left-10 w-72 h-72 bg-primary-300/10 dark:bg-primary-500/5 rounded-full blur-3xl opacity-60 animate-float hidden sm:block"></div>
+      <div className="absolute bottom-10 right-10 w-96 h-96 bg-blue-300/10 dark:bg-blue-500/5 rounded-full blur-3xl opacity-60 animate-float hidden sm:block" style={{ animationDelay: '2s' }}></div>
 
       {/* Back button - top left */}
-      <div className="absolute top-4 left-4 z-50 animate-slide-left">
+      <div className="absolute top-3 sm:top-4 left-3 sm:left-4 z-50 animate-slide-left">
         <Button
           variant="ghost"
           size="sm"
@@ -81,26 +81,26 @@ export const Register: React.FC = () => {
       </div>
 
       {/* Theme toggle - top right */}
-      <div className="absolute top-4 right-4 z-50 animate-slide-right">
+      <div className="absolute top-3 sm:top-4 right-3 sm:right-4 z-50 animate-slide-right">
         <ThemeToggle />
       </div>
 
-      <div className="w-full max-w-md relative z-10">
+      <div className="w-full max-w-sm sm:max-w-md relative z-10">
         {/* Header */}
-        <div className="text-center mb-12 animate-fade-in">
-          <div className="flex items-center justify-center gap-2 mb-6">
-            <div className="w-12 h-12 bg-gradient-to-br from-primary-600 to-primary-700 dark:from-primary-500 dark:to-primary-600 rounded-xl flex items-center justify-center shadow-lg shadow-primary-500/30 animate-float">
-              <BookOpen size={28} className="text-white" />
+        <div className="text-center mb-6 sm:mb-12 animate-fade-in">
+          <div className="flex items-center justify-center gap-2 mb-3 sm:mb-6">
+            <div className="w-10 sm:w-12 h-10 sm:h-12 bg-gradient-to-br from-primary-600 to-primary-700 dark:from-primary-500 dark:to-primary-600 rounded-xl flex items-center justify-center shadow-lg shadow-primary-500/30 animate-float">
+              <BookOpen size={24} className="sm:w-7 sm:h-7 text-white" />
             </div>
-            <span className="text-3xl font-bold gradient-text">QuizPro</span>
+            <span className="text-2xl sm:text-3xl font-bold gradient-text">QuizPro</span>
           </div>
-          <h1 className="text-4xl font-bold text-neutral-900 dark:text-white mb-3">Get Started</h1>
-          <p className="text-lg text-neutral-600 dark:text-neutral-400">Create your account to begin taking quizzes</p>
+          <h1 className="text-2xl sm:text-4xl font-bold text-neutral-900 dark:text-white mb-1 sm:mb-3">Get Started</h1>
+          <p className="text-xs sm:text-lg text-neutral-600 dark:text-neutral-400">Create your account</p>
         </div>
 
         {/* Alert */}
         {alert && (
-          <div className="mb-6 animate-scale-in">
+          <div className="mb-3 sm:mb-6 animate-scale-in">
             <Alert
               type={alert.type}
               title={alert.type === 'success' ? 'Success' : 'Error'}
@@ -111,7 +111,7 @@ export const Register: React.FC = () => {
         )}
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="card-elevated p-8 space-y-5 animate-scale-in shadow-xl">
+        <form onSubmit={handleSubmit} className="card-elevated p-3 sm:p-8 space-y-3 sm:space-y-5 animate-scale-in shadow-xl">
           <FormInput
             label="Full Name"
             name="name"
@@ -160,11 +160,11 @@ export const Register: React.FC = () => {
             autoComplete="new-password"
           />
 
-          <Button type="submit" variant="primary" isLoading={isSubmitting} className="w-full">
+          <Button type="submit" variant="primary" size="md" isLoading={isSubmitting} className="w-full">
             Create Account
           </Button>
 
-          <div className="text-center text-sm text-neutral-600 dark:text-neutral-400">
+          <div className="text-center text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">
             Already have an account?{' '}
             <Link to="/login" className="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-semibold transition-colors duration-200 hover:underline">
               Sign in
@@ -173,8 +173,8 @@ export const Register: React.FC = () => {
         </form>
 
         {/* Footer */}
-        <p className="text-center text-xs text-neutral-500 dark:text-neutral-500 mt-8 animate-fade-in" style={{ animationDelay: '0.3s' }}>
-          By creating an account, you agree to our Terms of Service
+        <p className="text-center text-xs text-neutral-500 dark:text-neutral-500 mt-4 sm:mt-8 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+          By creating an account, you agree to our Terms
         </p>
       </div>
     </div>

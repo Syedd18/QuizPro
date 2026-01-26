@@ -166,11 +166,18 @@
   /* ===== PREMIUM INPUT SYSTEM ===== */
   
   .input-field {
-    @apply w-full px-3 sm:px-4 py-3 text-sm sm:text-base text-neutral-900 dark:text-neutral-50 placeholder-neutral-500 dark:placeholder-neutral-400 rounded-xl transition-all duration-200 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-0 relative min-h-[44px];
+    @apply w-full px-3 sm:px-4 py-2.5 sm:py-3 text-base sm:text-base text-neutral-900 dark:text-neutral-50 placeholder-neutral-500 dark:placeholder-neutral-400 rounded-lg sm:rounded-xl transition-all duration-200 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-0 relative min-h-[48px] sm:min-h-[44px];
     background: rgba(255, 255, 255, 0.8);
     border: 2px solid;
     @apply border-neutral-200 dark:border-neutral-700;
     backdrop-filter: blur(8px);
+    font-size: 16px;
+  }
+
+  @media (max-width: 640px) {
+    .input-field {
+      font-size: 16px !important;
+    }
   }
 
   .input-field:hover {
