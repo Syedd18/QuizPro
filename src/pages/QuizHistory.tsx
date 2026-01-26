@@ -25,8 +25,10 @@ export const QuizHistory: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    loadAttempts();
-  }, []);
+    if (user?.id) {
+      loadAttempts();
+    }
+  }, [user?.id]);
 
   const loadAttempts = async () => {
     try {

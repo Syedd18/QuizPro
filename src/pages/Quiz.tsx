@@ -33,8 +33,10 @@ export const Quiz: React.FC = () => {
 
   // Load quiz and questions from database
   useEffect(() => {
-    loadQuizData();
-  }, [quizId]);
+    if (user?.id && quizId) {
+      loadQuizData();
+    }
+  }, [quizId, user?.id]);
 
   const loadQuizData = async () => {
     if (!quizId || !user?.id) return;
