@@ -87,27 +87,7 @@ src/
 │   └── index.ts        # Shared types
 ├── data/               # Mock data
 │   └── mockData.ts     # Test data
-└── App.tsx             # Main app component
-```
-
-## 🎨 Design System
-
-### Color Palette
-- **Primary**: Sky Blue (#2563eb → #1d4ed8)
-- **Secondary**: Blue (#0ea5e9)
-- **Success**: Green (#16a34a)
-- **Warning**: Amber (#d97706)
-- **Danger**: Red (#dc2626)
-- **Neutral**: Gray scale (50-950)
-
-### Typography
-- **Display**: Syne (24px-48px) - Headers
-- **Body**: Inter (12px-18px) - Content
-
-### Responsive Breakpoints
-- **Mobile**: < 640px
-- **Tablet**: 640px - 1024px
-- **Desktop**: > 1024px
+└── App.tsx             # Main app 
 
 ## 🔐 Authentication
 
@@ -116,10 +96,7 @@ src/
 - Session stored in browser with JWT tokens
 - Protected routes enforce authentication
 
-### Admin Login
-- Username: `admin`
-- Password: `admin123`
-- Admin session stored in localStorage
+
 
 ## 📊 Navigation Flow
 
@@ -133,16 +110,6 @@ Home/Public
     └── Admin Dashboard → [Quiz Management/Create Quiz]
 ```
 
-### Back Navigation
-Every page includes contextual back buttons:
-- **Login** → Home
-- **Register** → Home
-- **AdminLogin** → Home
-- **AdminDashboard** → Home
-- **Admin** → Dashboard
-- **AdminQuizManagement** → AdminDashboard
-- **CreateQuiz** → AdminDashboard
-- **Quiz/Results/QuizHistory** → Dashboard
 
 ## 🎯 User Flows
 
@@ -173,25 +140,7 @@ Every page includes contextual back buttons:
 - **Supabase** - Backend/Database (optional)
 - **PostCSS** - CSS processing
 
-## 📱 Mobile Optimization
 
-✅ **Touch-Friendly**
-- 44px minimum button/input height
-- Adequate padding and spacing
-- Simplified mobile navigation with collapse
-- Responsive text sizing
-
-✅ **Responsive Layouts**
-- Flexbox and Grid-based layouts
-- Mobile-first CSS approach using Tailwind
-- Collapsible admin navigation
-- Adaptive typography scale
-
-✅ **Performance**
-- CSS optimized: 81.99 kB → 11.25 kB gzipped
-- Tree-shaking for unused code
-- Lazy loading for pages
-- Code splitting for bundle reduction
 
 ## 🎯 Feature Details
 
@@ -342,94 +291,6 @@ Example:
    npm run preview
    ```
 
-## 🔑 Demo Credentials
 
-### Student Login
-- **Email**: any valid email format (e.g., `student@example.com`)
-- **Password**: Any 6+ character password
 
-### Admin Login
-- **Username**: `admin`
-- **Password**: `admin123`
 
-## 📈 Performance Metrics
-
-- **CSS Bundle**: 81.99 kB → 11.25 kB (gzipped) - 13.8% of original
-- **Load Time**: < 2 seconds on 4G
-- **Lighthouse Score**: 90+
-- **First Contentful Paint**: < 1 second
-- **Time to Interactive**: < 2 seconds
-
-## 🌐 Browser Support
-
-- Chrome/Edge 90+
-- Firefox 88+
-- Safari 14+
-- iOS Safari 14+
-- Chrome Mobile (latest)
-
-## 🔒 Security
-
-- Frontend-only architecture (secure for educational use)
-- Protected routes with authentication
-- Input validation on all forms
-- localStorage for session management
-- Password requirements enforced
-
-## 🐛 Troubleshooting
-
-### Port 3001 Already in Use
-```bash
-npm run dev -- --port 3002
-```
-
-### Dependencies Not Found
-```bash
-npm install
-npm cache clean --force
-```
-
-### Build Errors
-```bash
-rm -rf node_modules package-lock.json
-npm install
-npm run build
-```
-
-### Dark Mode Not Working
-Clear localStorage and refresh:
-```bash
-localStorage.clear()
-```
-
-## 🎓 Educational Notes
-
-- Perfect for learning React, TypeScript, and Tailwind CSS
-- Demonstrates modern web development patterns
-- Shows responsive design principles
-- Includes accessibility best practices
-- Example of component composition and state management
-
-## 🔮 Future Enhancements
-
-- Backend API integration with Node.js/Express
-- PostgreSQL database for persistence
-- Real email notifications
-- Advanced analytics dashboard
-- Question bank management
-- Quiz scheduling and auto-launch
-- Student progress tracking
-- Discussion forums
-- Gamification (badges, leaderboards)
-- Export quiz results as PDF
-- Bulk student import
-- Quiz templates library
-
-## 📄 License
-
-MIT License - Free for educational and commercial use
-
----
-
-**QuizPro v1.0.0** | Built with React 18.2, TypeScript 5.2, Tailwind CSS 3.3, and Vite 5.0
-**Last Updated**: 2024 | Fully Responsive & Accessible
