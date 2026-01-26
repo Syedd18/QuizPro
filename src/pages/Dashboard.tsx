@@ -106,39 +106,40 @@ export const Dashboard: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-br from-neutral-50 via-white to-blue-50/40 dark:from-neutral-950 dark:via-neutral-900 dark:to-blue-900/20" style={{ backgroundAttachment: 'fixed' }}>
       {/* Header */}
       <header className="glass-effect-strong sticky top-0 z-10 border-b dark:border-neutral-700/30 transition-all duration-300 shadow-sm">
-        <div className="container-max py-3 sm:py-4 flex items-center justify-between gap-2 sm:gap-3">
+        <div className="container-max py-3 sm:py-4 px-3 sm:px-6 flex items-center justify-between gap-2 sm:gap-3">
           <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-            <div className="relative w-10 sm:w-11 h-10 sm:h-11 rounded-xl flex items-center justify-center flex-shrink-0 animate-float" style={{ animationDelay: '0.2s' }}>
+            <div className="relative w-9 sm:w-10 md:w-11 h-9 sm:h-10 md:h-11 rounded-xl flex items-center justify-center flex-shrink-0 animate-float" style={{ animationDelay: '0.2s' }}>
               <div className="absolute inset-0 bg-gradient-to-br from-primary-600 to-primary-700 rounded-xl"></div>
-              <BookOpen size={20} className="sm:w-6 sm:h-6 text-white relative z-10" />
+              <BookOpen size={18} className="sm:w-5 md:w-6 text-white relative z-10" />
             </div>
             <div className="min-w-0">
-              <h1 className="text-lg sm:text-2xl font-bold gradient-text truncate">QuizPro</h1>
-              <p className="text-xs text-neutral-500 dark:text-neutral-400 hidden sm:block">Learning Platform</p>
+              <h1 className="text-base sm:text-xl md:text-2xl font-bold gradient-text truncate">QuizPro</h1>
+              <p className="text-xs text-neutral-500 dark:text-neutral-400 hidden md:block">Learning Platform</p>
             </div>
           </div>
 
-          <nav className="hidden md:flex items-center gap-2 lg:gap-3">
-            <span className="text-neutral-600 dark:text-neutral-400 text-xs sm:text-sm font-medium truncate">
+          <nav className="flex items-center gap-1.5 sm:gap-2 lg:gap-3 flex-wrap justify-end">
+            <span className="text-neutral-600 dark:text-neutral-400 text-xs sm:text-sm font-medium truncate hidden sm:block">
               Welcome, <span className="text-primary-600 dark:text-primary-400 font-semibold">{user?.user_metadata?.name || user?.email?.split('@')[0] || 'User'}</span>
             </span>
-            <div className="divider h-6"></div>
+            <div className="divider h-5 sm:h-6 hidden sm:block"></div>
             <div className="animate-slide-left" style={{ animationDelay: '0.15s' }}>
               <Button
                 variant="outline"
                 size="sm"
-                icon={<History size={18} />}
+                icon={<History size={16} />}
                 onClick={() => navigate('/history')}
+                className="hidden sm:flex"
               >
                 History
               </Button>
             </div>
             {user?.role && user.role === 'admin' && (
-              <div className="animate-slide-left" style={{ animationDelay: '0.2s' }}>
+              <div className="animate-slide-left hidden sm:block" style={{ animationDelay: '0.2s' }}>
                 <Button
                   variant="outline"
                   size="sm"
-                  icon={<Settings size={18} />}
+                  icon={<Settings size={16} />}
                   onClick={() => navigate('/admin')}
                 >
                   Admin
