@@ -149,7 +149,7 @@ export const CreateQuiz: React.FC = () => {
     <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950">
       {/* Header */}
       <header className="bg-white dark:bg-neutral-800 border-b border-neutral-200 dark:border-neutral-700 sticky top-0 z-10">
-        <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
+        <div className="max-w-4xl mx-auto px-3 sm:px-4 py-3 sm:py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Button
               variant="ghost"
@@ -169,19 +169,19 @@ export const CreateQuiz: React.FC = () => {
       </header>
 
       {/* Form */}
-      <main className="max-w-4xl mx-auto px-4 py-8">
+      <main className="max-w-4xl mx-auto px-3 sm:px-4 py-4 sm:py-8">
         {error && (
           <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg">
             <p className="text-red-700 dark:text-red-300">{error}</p>
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-8">
+        <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
           {/* Quiz Details */}
-          <div className="bg-white dark:bg-neutral-800 rounded-lg shadow-soft dark:shadow-none dark:border dark:border-neutral-700 p-6">
-            <h2 className="text-xl font-bold text-neutral-900 dark:text-white mb-6">Quiz Details</h2>
+          <div className="bg-white dark:bg-neutral-800 rounded-lg shadow-soft dark:shadow-none dark:border dark:border-neutral-700 p-4 sm:p-6">
+            <h2 className="text-lg sm:text-xl font-bold text-neutral-900 dark:text-white mb-4 sm:mb-6">Quiz Details</h2>
 
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               <FormInput
                 label="Quiz Title"
                 name="title"
@@ -212,7 +212,7 @@ export const CreateQuiz: React.FC = () => {
                 placeholder="e.g., Mathematics, Science, Programming"
               />
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <FormInput
                   label="Time Limit (minutes)"
                   name="time_limit"
@@ -237,25 +237,27 @@ export const CreateQuiz: React.FC = () => {
           </div>
 
           {/* Questions */}
-          <div className="bg-white dark:bg-neutral-800 rounded-lg shadow-soft dark:shadow-none dark:border dark:border-neutral-700 p-6">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-neutral-900 dark:text-white">Questions</h2>
+          <div className="bg-white dark:bg-neutral-800 rounded-lg shadow-soft dark:shadow-none dark:border dark:border-neutral-700 p-4 sm:p-6">
+            <div className="flex items-center justify-between mb-4 sm:mb-6 gap-2">
+              <h2 className="text-lg sm:text-xl font-bold text-neutral-900 dark:text-white">Questions</h2>
               <Button
                 type="button"
                 variant="primary"
                 size="sm"
-                icon={<Plus size={18} />}
+                icon={<Plus size={16} />}
                 onClick={addQuestion}
+                className="text-xs sm:text-sm"
               >
-                Add Question
+                <span className="hidden sm:inline">Add Question</span>
+                <span className="sm:hidden">Add</span>
               </Button>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {questions.map((question, index) => (
                 <div
                   key={question.tempId}
-                  className="border border-neutral-200 dark:border-neutral-700 rounded-lg p-4"
+                  className="border border-neutral-200 dark:border-neutral-700 rounded-lg p-3 sm:p-4"
                 >
                   {/* Question Header */}
                   <div
@@ -307,17 +309,17 @@ export const CreateQuiz: React.FC = () => {
 
                   {/* Question Details */}
                   {expandedQuestion === question.tempId && (
-                    <div className="mt-4 space-y-4">
+                    <div className="mt-3 sm:mt-4 space-y-3 sm:space-y-4">
                       <textarea
                         value={question.question_text}
                         onChange={(e) => updateQuestion(question.tempId, 'question_text', e.target.value)}
-                        className="w-full px-4 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg bg-white dark:bg-neutral-800 text-neutral-900 dark:text-white"
+                        className="w-full px-3 sm:px-4 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg bg-white dark:bg-neutral-800 text-neutral-900 dark:text-white text-sm sm:text-base"
                         placeholder="Enter question text"
                         rows={2}
                         required
                       />
 
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-2 sm:grid-cols-2 gap-2 sm:gap-4">
                         {['option_a', 'option_b', 'option_c', 'option_d'].map((opt) => (
                           <input
                             key={opt}
@@ -325,21 +327,21 @@ export const CreateQuiz: React.FC = () => {
                             value={question[opt as keyof QuestionForm]}
                             onChange={(e) => updateQuestion(question.tempId, opt, e.target.value)}
                             placeholder={`Option ${opt.toUpperCase().split('_')[1]}`}
-                            className="px-4 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg bg-white dark:bg-neutral-800 text-neutral-900 dark:text-white"
+                            className="px-3 sm:px-4 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg bg-white dark:bg-neutral-800 text-neutral-900 dark:text-white text-xs sm:text-base"
                             required
                           />
                         ))}
                       </div>
 
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                         <div>
-                          <label className="block text-sm font-semibold text-neutral-900 dark:text-white mb-2">
+                          <label className="block text-xs sm:text-sm font-semibold text-neutral-900 dark:text-white mb-1 sm:mb-2">
                             Correct Answer
                           </label>
                           <select
                             value={question.correct_option}
                             onChange={(e) => updateQuestion(question.tempId, 'correct_option', e.target.value)}
-                            className="w-full px-4 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg bg-white dark:bg-neutral-800 text-neutral-900 dark:text-white"
+                            className="w-full px-3 sm:px-4 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg bg-white dark:bg-neutral-800 text-neutral-900 dark:text-white text-sm sm:text-base"
                           >
                             {['A', 'B', 'C', 'D'].map((opt) => (
                               <option key={opt} value={opt}>
@@ -362,7 +364,7 @@ export const CreateQuiz: React.FC = () => {
                       <textarea
                         value={question.explanation}
                         onChange={(e) => updateQuestion(question.tempId, 'explanation', e.target.value)}
-                        className="w-full px-4 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg bg-white dark:bg-neutral-800 text-neutral-900 dark:text-white"
+                        className="w-full px-3 sm:px-4 py-2 border border-neutral-300 dark:border-neutral-600 rounded-lg bg-white dark:bg-neutral-800 text-neutral-900 dark:text-white text-sm sm:text-base"
                         placeholder="Enter explanation (optional)"
                         rows={2}
                       />
@@ -374,11 +376,12 @@ export const CreateQuiz: React.FC = () => {
           </div>
 
           {/* Action Buttons */}
-          <div className="flex gap-4 justify-end">
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 justify-end">
             <Button
               type="button"
               variant="outline"
               onClick={() => navigate('/admin/quizzes')}
+              className="w-full sm:w-auto"
             >
               Cancel
             </Button>
@@ -386,6 +389,7 @@ export const CreateQuiz: React.FC = () => {
               type="submit"
               variant="primary"
               disabled={loading}
+              className="w-full sm:w-auto"
             >
               {loading ? 'Creating...' : 'Create Quiz'}
             </Button>

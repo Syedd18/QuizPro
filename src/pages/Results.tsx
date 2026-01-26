@@ -108,7 +108,7 @@ export const Results: React.FC = () => {
       {/* Header */}
       {!printMode && (
         <header className="bg-white dark:bg-neutral-800 border-b border-neutral-200 dark:border-neutral-700 transition-colors sticky top-0 z-10">
-          <div className="container-max py-2.5 sm:py-4">
+          <div className="container-max px-3 sm:px-4 py-2.5 sm:py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 sm:gap-3 min-w-0">
                 <div className="w-8 sm:w-10 h-8 sm:h-10 bg-primary-600 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -146,8 +146,8 @@ export const Results: React.FC = () => {
       )}
 
       {/* Main Content */}
-      <main className={`${printMode ? '' : 'container-max py-4 sm:py-8'}`}>
-        <div className={`${printMode ? 'p-4 sm:p-8 max-w-4xl mx-auto' : 'max-w-4xl mx-auto'}`}>
+      <main className={`${printMode ? '' : 'container-max px-3 sm:px-4 py-4 sm:py-8'}`}>
+        <div className={`${printMode ? 'p-3 sm:p-8 max-w-4xl mx-auto' : 'max-w-4xl mx-auto'}`}>
           {!printMode && (
             <Button
               variant="ghost"
@@ -310,10 +310,9 @@ export const Results: React.FC = () => {
 
           {/* Footer Buttons */}
           {!printMode && (
-            <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mt-6 sm:mt-8 justify-center">
-              <Button variant="primary" onClick={() => navigate('/dashboard')} className="w-full sm:w-auto">
-                <span className="hidden sm:inline">Back to Dashboard</span>
-                <span className="sm:hidden text-xs">Back to Dashboard</span>
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mt-4 sm:mt-8 justify-center">
+              <Button variant="primary" onClick={() => navigate('/dashboard')} className="w-full sm:w-auto text-sm sm:text-base py-2 sm:py-3">
+                Back to Dashboard
               </Button>
             </div>
           )}
