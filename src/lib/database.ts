@@ -228,6 +228,52 @@ export const questionService = {
 export const attemptService = {
   // Start a quiz attempt
   async startAttempt(studentId: string, quizId: string) {
+    // Ensure the student has a profile in `user_profiles` before inserting
+    const { data: profiles, error: profileError } = await supabase
+      .from('user_profiles')
+      .select('id')
+      .eq('id', studentId)
+      .limit(1);
+
+    if (profileError) throw new Error(profileError.message);
+    if (!profiles || (Array.isArray(profiles) && profiles.length === 0)) {
+      // Try to create the profile from the currently authenticated user (if it matches)
+      try {
+        // Supabase client v2: get currently authenticated user
+        // Fallback: if getUser is unavailable this will throw and we'll surface a helpful error below
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        const { data: authData, error: authErr } = await supabase.auth.getUser();
+
+        if (authErr) throw authErr;
+
+        const authUser = authData?.user;
+        if (authUser && authUser.id === studentId) {
+          const name = authUser.user_metadata?.full_name || authUser.email || 'Student';
+          const email = authUser.email || `${studentId}@example.com`;
+
+          const { error: upsertErr } = await supabase
+            .from('user_profiles')
+            .upsert([
+              { id: studentId, name, email, created_at: new Date().toISOString() },
+            ], { onConflict: 'id' });
+
+          if (upsertErr) throw upsertErr;
+
+          // profile created — continue
+        } else {
+          throw new Error(
+            `No user profile found for student_id ${studentId}. Create a record in user_profiles before starting an attempt.`
+          );
+        }
+      } catch (err) {
+        // Surface a clearer error for the client instead of a DB FK 409
+        throw new Error(
+          `Cannot start attempt: no user profile for student_id ${studentId}. Create the profile first or ensure the logged-in user matches this id. (${err?.message || err})`
+        );
+      }
+    }
+
     const { data, error } = await supabase
       .from('quiz_attempts')
       .insert([

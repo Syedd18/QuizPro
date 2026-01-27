@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS public.questions (
 -- Create quiz attempts table
 CREATE TABLE IF NOT EXISTS public.quiz_attempts (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  student_id UUID NOT NULL,
+  student_id UUID NOT NULL REFERENCES public.user_profiles(id) ON DELETE CASCADE,
   quiz_id UUID NOT NULL REFERENCES public.quizzes(id) ON DELETE CASCADE,
   score INTEGER DEFAULT 0,
   percentage DECIMAL(5, 2) DEFAULT 0,
