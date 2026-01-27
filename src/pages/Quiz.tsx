@@ -218,7 +218,7 @@ export const Quiz: React.FC = () => {
       {/* Header */}
       <header className="bg-white dark:bg-neutral-800 border-b border-neutral-200 dark:border-neutral-700 sticky top-0 z-20 transition-colors duration-300">
         <div className="container-max px-3 sm:px-6 py-2.5 sm:py-4">
-          <div className="flex items-center justify-between gap-2 sm:gap-4">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-4">
             <div className="flex items-center gap-1.5 sm:gap-3 min-w-0 flex-1">
               <Button
                 variant="ghost"
@@ -239,7 +239,7 @@ export const Quiz: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex-shrink-0">
+            <div className="w-full sm:w-auto mt-2 sm:mt-0 flex-shrink-0 flex justify-center sm:justify-end">
               <Timer 
                 minutes={timer?.minutes ?? 0} 
                 seconds={timer?.displaySeconds ?? 0} 

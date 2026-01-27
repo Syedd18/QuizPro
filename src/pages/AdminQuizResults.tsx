@@ -175,9 +175,40 @@ export const AdminQuizResults: React.FC = () => {
           </div>
         )}
 
-        {/* Results Summary */}
+        {/* Mobile results list (visible on phones) */}
         {results.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+        <div className="sm:hidden space-y-3 mb-4">
+          {results.map((r) => (
+            <div key={r.id} className="card p-3">
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex-1 min-w-0">
+                  <p className="font-semibold truncate">{r.studentName}</p>
+                  <p className="text-xs text-neutral-600 truncate">{r.studentEmail}</p>
+                  <div className="mt-2 text-sm">
+                    <span className="font-semibold">{r.score}/{r.totalMarks}</span>
+                    <span className="text-neutral-600 ml-2">{Math.round(r.percentage)}%</span>
+                  </div>
+                  <div className="mt-1 text-xs text-neutral-600">{formatTime(r.timeTaken)} • {formatDate(r.completedAt)}</div>
+                </div>
+                <div className="flex-shrink-0">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => navigate(`/results/${quiz?.id}`, { state: { attemptId: r.attemptId, score: r.score, totalMarks: r.totalMarks } })}
+                  >
+                    View
+                  </Button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        )}
+
+        {/* Results Summary (desktop/tablet) */}
+        {results.length > 0 && (
+        <div className="hidden sm:grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
             <div className="bg-white dark:bg-neutral-800 rounded-lg p-4 sm:p-6 border border-neutral-200 dark:border-neutral-700">
               <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 mb-1">Total Attempts</p>
               <p className="text-3xl sm:text-4xl font-bold text-primary-600 dark:text-primary-400">{results.length}</p>

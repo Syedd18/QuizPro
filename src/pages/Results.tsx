@@ -182,7 +182,7 @@ export const Results: React.FC = () => {
               <p className="text-xs sm:text-base text-neutral-600 dark:text-neutral-400 truncate">Results for {quiz?.title}</p>
             </div>
 
-            <div className="grid grid-cols-4 gap-2 sm:gap-4 sm:gap-6 mb-4 sm:mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4 sm:gap-6 mb-4 sm:mb-8">
               {/* Score */}
               <div className={`p-3 sm:p-6 rounded-lg sm:rounded-xl text-center ${printMode ? 'border border-neutral-300' : 'bg-primary-50 dark:bg-primary-900/20'}`}>
                 <div className={`text-2xl sm:text-4xl font-bold mb-1 sm:mb-2 ${getGradeColor(percentage)}`}>
