@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { supabase } from '../lib/supabase';
 import type { User } from '@supabase/supabase-js';
 
 interface AppUser extends User {
@@ -29,7 +31,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       try {
         const { data: { session }, error } = await supabase.auth.getSession();
         if (error) throw error;
-        
+
         if (session?.user) {
           const userData: AppUser = {
             ...session.user,
@@ -88,7 +90,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           emailRedirectTo: undefined, // No confirmation email redirect needed
         },
       });
-      
+
       if (error) throw error;
 
       // Auto-sign in the user immediately after signup
@@ -114,9 +116,62 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         email,
         password,
       });
-      
+
       if (error) {
         throw error;
+      }
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Sign in failed';
+      setError(message);
+      throw err;
+    }
+  };
+
+  const signOut = async () => {
+    try {
+      setError(null);
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      localStorage.removeItem('userRole');
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Sign out failed';
+      setError(message);
+      throw err;
+    }
+  };
+
+  const setUserRole = (role: 'user' | 'admin') => {
+    localStorage.setItem('userRole', role);
+    if (user) {
+      setUser({ ...user, role });
+    }
+  };
+
+  return (
+    <AuthContext.Provider
+      value={{
+        user,
+        loading,
+        error,
+        signUp,
+        signIn,
+        signOut,
+        setUserRole,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export const useAuth = (): AuthContextType => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within AuthProvider');
+  }
+  return context;
+};
+        console.warn('Failed to ensure user_profiles row on signIn:', e);
       }
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Sign in failed';
