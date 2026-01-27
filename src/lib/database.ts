@@ -67,26 +67,47 @@ export const quizService = {
 
   // Get all quizzes
   async getAllQuizzes() {
-    const { data, error } = await supabase
-      .from('quizzes')
-      .select('*')
-      .order('created_at', { ascending: false });
+    try {
+      const { data, error } = await supabase
+        .from('quizzes')
+        .select('*')
+        .order('created_at', { ascending: false });
 
-    if (error) throw new Error(error.message);
-    return data;
+      if (error) {
+        // Treat client-side aborts as non-fatal and return empty list
+        if ((error as any).name === 'AbortError' || (error as any).message?.includes('aborted')) {
+          return [];
+        }
+        throw new Error(error.message);
+      }
+      return data;
+    } catch (err: any) {
+      if (err && err.name === 'AbortError') return [];
+      throw err instanceof Error ? err : new Error(String(err));
+    }
   },
 
   // Get published quizzes for students
   async getPublishedQuizzes() {
-    const { data, error } = await supabase
-      .from('quizzes')
-      .select('*')
-      .eq('is_published', true)
-      .eq('is_active', true)
-      .order('created_at', { ascending: false });
+    try {
+      const { data, error } = await supabase
+        .from('quizzes')
+        .select('*')
+        .eq('is_published', true)
+        .eq('is_active', true)
+        .order('created_at', { ascending: false });
 
-    if (error) throw new Error(error.message);
-    return data;
+      if (error) {
+        if ((error as any).name === 'AbortError' || (error as any).message?.includes('aborted')) {
+          return [];
+        }
+        throw new Error(error.message);
+      }
+      return data;
+    } catch (err: any) {
+      if (err && err.name === 'AbortError') return [];
+      throw err instanceof Error ? err : new Error(String(err));
+    }
   },
 
   // Get quiz by ID with questions count
