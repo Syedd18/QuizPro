@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { supabase } from '../lib/supabase';
 import type { User } from '@supabase/supabase-js';
 
 interface AppUser extends User {
@@ -29,7 +31,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       try {
         const { data: { session }, error } = await supabase.auth.getSession();
         if (error) throw error;
-        
+
         if (session?.user) {
           const userData: AppUser = {
             ...session.user,
@@ -41,23 +43,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             userData.role = storedRole;
           }
           setUser(userData);
-          // Ensure user_profiles exists for the restored session
-          try {
-            const nameFromMeta = session.user.user_metadata?.name || session.user.user_metadata?.full_name;
-            const name = nameFromMeta || session.user.email || 'Student';
-            await supabase.from('user_profiles').upsert([
-              { id: session.user.id, name, email: session.user.email, created_at: new Date().toISOString() },
-            ], { onConflict: 'id' });
-          } catch (e) {
-            console.warn('Failed to ensure user_profiles on session restore:', e);
-          }
         }
-      } catch (err: any) {
-        if (err && err.name === 'AbortError') {
-          console.warn('Auth check aborted');
-        } else {
-          console.error('Auth check failed:', err);
-        }
+      } catch (err) {
+        console.error('Auth check failed:', err);
       } finally {
         setLoading(false);
       }
@@ -78,16 +66,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             userData.role = storedRole;
           }
           setUser(userData);
-          // Ensure user_profiles exists whenever auth state changes to a signed-in user
-          try {
-            const nameFromMeta = session.user.user_metadata?.name || session.user.user_metadata?.full_name;
-            const name = nameFromMeta || session.user.email || 'Student';
-            await supabase.from('user_profiles').upsert([
-              { id: session.user.id, name, email: session.user.email, created_at: new Date().toISOString() },
-            ], { onConflict: 'id' });
-          } catch (e) {
-            console.warn('Failed to ensure user_profiles on auth change:', e);
-          }
         } else {
           setUser(null);
           localStorage.removeItem('userRole');
@@ -112,7 +90,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           emailRedirectTo: undefined, // No confirmation email redirect needed
         },
       });
-      
+
       if (error) throw error;
 
       // Auto-sign in the user immediately after signup
@@ -123,22 +101,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         });
         
         if (signInError) throw signInError;
-      }
-      // Ensure a user_profiles row exists for this user
-      try {
-        const { data: userData, error: userErr } = await supabase.auth.getUser();
-        if (userErr) throw userErr;
-        const authUser = userData?.user;
-        if (authUser) {
-          const nameFromMeta = authUser.user_metadata?.name || authUser.user_metadata?.full_name;
-          const name = nameFromMeta || name || authUser.email || 'Student';
-          await supabase.from('user_profiles').upsert([
-            { id: authUser.id, name, email: authUser.email, created_at: new Date().toISOString() },
-          ], { onConflict: 'id' });
-        }
-      } catch (e) {
-        // non-fatal — auth succeeded, profile creation failed; profile may be created later
-        console.warn('Failed to ensure user_profiles row:', e);
       }
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Sign up failed';
@@ -154,23 +116,61 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         email,
         password,
       });
-      
+
       if (error) {
         throw error;
       }
-      // Ensure user_profiles exists for signed-in user
-      try {
-        const { data: userData, error: userErr } = await supabase.auth.getUser();
-        if (userErr) throw userErr;
-        const authUser = userData?.user;
-        if (authUser) {
-          const nameFromMeta = authUser.user_metadata?.name || authUser.user_metadata?.full_name;
-          const name = nameFromMeta || authUser.email || 'Student';
-          await supabase.from('user_profiles').upsert([
-            { id: authUser.id, name, email: authUser.email, created_at: new Date().toISOString() },
-          ], { onConflict: 'id' });
-        }
-      } catch (e) {
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Sign in failed';
+      setError(message);
+      throw err;
+    }
+  };
+
+  const signOut = async () => {
+    try {
+      setError(null);
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      localStorage.removeItem('userRole');
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Sign out failed';
+      setError(message);
+      throw err;
+    }
+  };
+
+  const setUserRole = (role: 'user' | 'admin') => {
+    localStorage.setItem('userRole', role);
+    if (user) {
+      setUser({ ...user, role });
+    }
+  };
+
+  return (
+    <AuthContext.Provider
+      value={{
+        user,
+        loading,
+        error,
+        signUp,
+        signIn,
+        signOut,
+        setUserRole,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export const useAuth = (): AuthContextType => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within AuthProvider');
+  }
+  return context;
+};
         console.warn('Failed to ensure user_profiles row on signIn:', e);
       }
     } catch (err) {

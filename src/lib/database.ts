@@ -67,47 +67,26 @@ export const quizService = {
 
   // Get all quizzes
   async getAllQuizzes() {
-    try {
-      const { data, error } = await supabase
-        .from('quizzes')
-        .select('*')
-        .order('created_at', { ascending: false });
+    const { data, error } = await supabase
+      .from('quizzes')
+      .select('*')
+      .order('created_at', { ascending: false });
 
-      if (error) {
-        // Treat client-side aborts as non-fatal and return empty list
-        if ((error as any).name === 'AbortError' || (error as any).message?.includes('aborted')) {
-          return [];
-        }
-        throw new Error(error.message);
-      }
-      return data;
-    } catch (err: any) {
-      if (err && err.name === 'AbortError') return [];
-      throw err instanceof Error ? err : new Error(String(err));
-    }
+    if (error) throw new Error(error.message);
+    return data;
   },
 
   // Get published quizzes for students
   async getPublishedQuizzes() {
-    try {
-      const { data, error } = await supabase
-        .from('quizzes')
-        .select('*')
-        .eq('is_published', true)
-        .eq('is_active', true)
-        .order('created_at', { ascending: false });
+    const { data, error } = await supabase
+      .from('quizzes')
+      .select('*')
+      .eq('is_published', true)
+      .eq('is_active', true)
+      .order('created_at', { ascending: false });
 
-      if (error) {
-        if ((error as any).name === 'AbortError' || (error as any).message?.includes('aborted')) {
-          return [];
-        }
-        throw new Error(error.message);
-      }
-      return data;
-    } catch (err: any) {
-      if (err && err.name === 'AbortError') return [];
-      throw err instanceof Error ? err : new Error(String(err));
-    }
+    if (error) throw new Error(error.message);
+    return data;
   },
 
   // Get quiz by ID with questions count
@@ -249,52 +228,6 @@ export const questionService = {
 export const attemptService = {
   // Start a quiz attempt
   async startAttempt(studentId: string, quizId: string) {
-    // Ensure the student has a profile in `user_profiles` before inserting
-    const { data: profiles, error: profileError } = await supabase
-      .from('user_profiles')
-      .select('id')
-      .eq('id', studentId)
-      .limit(1);
-
-    if (profileError) throw new Error(profileError.message);
-    if (!profiles || (Array.isArray(profiles) && profiles.length === 0)) {
-      // Try to create the profile from the currently authenticated user (if it matches)
-      try {
-        // Supabase client v2: get currently authenticated user
-        // Fallback: if getUser is unavailable this will throw and we'll surface a helpful error below
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        const { data: authData, error: authErr } = await supabase.auth.getUser();
-
-        if (authErr) throw authErr;
-
-        const authUser = authData?.user;
-        if (authUser && authUser.id === studentId) {
-          const name = authUser.user_metadata?.full_name || authUser.email || 'Student';
-          const email = authUser.email || `${studentId}@example.com`;
-
-          const { error: upsertErr } = await supabase
-            .from('user_profiles')
-            .upsert([
-              { id: studentId, name, email, created_at: new Date().toISOString() },
-            ], { onConflict: 'id' });
-
-          if (upsertErr) throw upsertErr;
-
-          // profile created — continue
-        } else {
-          throw new Error(
-            `No user profile found for student_id ${studentId}. Create a record in user_profiles before starting an attempt.`
-          );
-        }
-      } catch (err) {
-        // Surface a clearer error for the client instead of a DB FK 409
-        throw new Error(
-          `Cannot start attempt: no user profile for student_id ${studentId}. Create the profile first or ensure the logged-in user matches this id. (${err?.message || err})`
-        );
-      }
-    }
-
     const { data, error } = await supabase
       .from('quiz_attempts')
       .insert([
