@@ -102,17 +102,7 @@ export const AdminLogin: React.FC = () => {
           </div>
         )}
 
-        {/* Default Credentials Info */}
-        <div className="mb-3 sm:mb-6 p-2.5 sm:p-4 bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-lg">
-          <div className="flex gap-2">
-            <AlertCircle size={16} className="sm:w-5 sm:h-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
-            <div className="text-xs sm:text-sm text-blue-700 dark:text-blue-300 min-w-0">
-              <p className="font-semibold mb-0.5">Demo Credentials</p>
-              <p className="truncate"><strong>Username:</strong> admin</p>
-              <p className="truncate"><strong>Password:</strong> admin123</p>
-            </div>
-          </div>
-        </div>
+        {/* Demo credentials removed for security */}
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="card p-3 sm:p-8 space-y-3 sm:space-y-6">
