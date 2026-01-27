@@ -64,6 +64,21 @@ export const Results: React.FC = () => {
     }
   };
 
+  const formatTime = (seconds: number) => {
+    if (!seconds) return '-';
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+
+    if (hours > 0) {
+      return `${hours}h ${minutes}m`;
+    } else if (minutes > 0) {
+      return `${minutes}m ${secs}s`;
+    } else {
+      return `${secs}s`;
+    }
+  };
+
   const handlePrintableView = () => {
     setPrintMode(!printMode);
   };
@@ -167,7 +182,7 @@ export const Results: React.FC = () => {
               <p className="text-xs sm:text-base text-neutral-600 dark:text-neutral-400 truncate">Results for {quiz?.title}</p>
             </div>
 
-            <div className="grid grid-cols-3 gap-2 sm:gap-4 sm:gap-6 mb-4 sm:mb-8">
+            <div className="grid grid-cols-4 gap-2 sm:gap-4 sm:gap-6 mb-4 sm:mb-8">
               {/* Score */}
               <div className={`p-3 sm:p-6 rounded-lg sm:rounded-xl text-center ${printMode ? 'border border-neutral-300' : 'bg-primary-50 dark:bg-primary-900/20'}`}>
                 <div className={`text-2xl sm:text-4xl font-bold mb-1 sm:mb-2 ${getGradeColor(percentage)}`}>
@@ -190,6 +205,14 @@ export const Results: React.FC = () => {
                   {correctCount}/{answers.length}
                 </div>
                 <p className="text-xs text-neutral-600 dark:text-neutral-400">Correct</p>
+              </div>
+
+              {/* Time Taken */}
+              <div className={`p-3 sm:p-6 rounded-lg sm:rounded-xl text-center ${printMode ? 'border border-neutral-300' : 'bg-yellow-50 dark:bg-yellow-900/10'}`}>
+                <div className="text-2xl sm:text-4xl font-bold text-yellow-600 dark:text-yellow-400 mb-1 sm:mb-2">
+                  {attempt?.time_taken ? formatTime(attempt.time_taken) : '-'}
+                </div>
+                <p className="text-xs text-neutral-600 dark:text-neutral-400">Time Taken</p>
               </div>
             </div>
 

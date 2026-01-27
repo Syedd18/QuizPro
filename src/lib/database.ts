@@ -341,7 +341,8 @@ export const attemptService = {
       is_correct: boolean;
       marks_obtained: number;
     }>,
-    score: number
+    score: number,
+    timeTaken?: number
   ) {
     // Save all answers
     const { error: insertError } = await supabase
@@ -357,15 +358,20 @@ export const attemptService = {
     const quiz = await quizService.getQuizById(attempt.quiz_id);
     const percentage = (score / quiz.total_marks) * 100;
 
-    // Complete the attempt
+    // Complete the attempt (include time_taken if provided)
+    const updateFields: any = {
+      status: 'completed',
+      completed_at: new Date().toISOString(),
+      score: score,
+      percentage: Math.round(percentage * 100) / 100,
+    };
+    if (typeof timeTaken === 'number') {
+      updateFields.time_taken = timeTaken;
+    }
+
     const { data, error } = await supabase
       .from('quiz_attempts')
-      .update({
-        status: 'completed',
-        completed_at: new Date().toISOString(),
-        score: score,
-        percentage: Math.round(percentage * 100) / 100,
-      })
+      .update(updateFields)
       .eq('id', attemptId)
       .select()
       .single();

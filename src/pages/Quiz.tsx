@@ -165,7 +165,11 @@ export const Quiz: React.FC = () => {
         });
 
         console.log('Saving answers to database:', answerRecords);
-        const submitResult = await attemptService.submitAnswers(attemptId, answerRecords, score);
+        // Calculate elapsed seconds as time taken (initial total - remaining seconds)
+        const totalSeconds = quiz ? quiz.time_limit * 60 : 0;
+        const timeTaken = Math.max(0, totalSeconds - (timer?.seconds ?? 0));
+
+        const submitResult = await attemptService.submitAnswers(attemptId, answerRecords, score, timeTaken);
         console.log('Submit result:', submitResult);
       }
 
