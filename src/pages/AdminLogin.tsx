@@ -60,24 +60,21 @@ export const AdminLogin: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-50 to-neutral-50 dark:from-neutral-950 dark:to-neutral-900 flex flex-col items-center justify-center px-3 py-8 sm:p-4 transition-colors duration-300">
-      {/* Back button - top left */}
-      <div className="absolute top-3 sm:top-4 left-3 sm:left-4">
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => navigate('/')}
-          icon={<ArrowLeft size={20} />}
-        >
-          <span className="hidden sm:inline text-xs sm:text-sm">Back</span>
-        </Button>
-      </div>
-
-      {/* Theme toggle */}
-      <div className="absolute top-3 sm:top-4 right-3 sm:right-4">
-        <ThemeToggle />
-      </div>
+      {/* Top controls (back + theme) - placed inside container so visible on mobile */}
 
       <div className="w-full max-w-sm sm:max-w-md">
+        <div className="flex items-center justify-between mb-3 sm:mb-4">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => navigate('/')}
+            icon={<ArrowLeft size={20} />}
+            className="px-2 py-1"
+          >
+            <span className="hidden sm:inline text-xs sm:text-sm">Back</span>
+          </Button>
+          <ThemeToggle />
+        </div>
         {/* Header */}
         <div className="text-center mb-4 sm:mb-8">
           <div className="flex items-center justify-center gap-2 mb-2 sm:mb-4">
