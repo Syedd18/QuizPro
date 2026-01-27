@@ -52,8 +52,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             console.warn('Failed to ensure user_profiles on session restore:', e);
           }
         }
-      } catch (err) {
-        console.error('Auth check failed:', err);
+      } catch (err: any) {
+        if (err && err.name === 'AbortError') {
+          console.warn('Auth check aborted');
+        } else {
+          console.error('Auth check failed:', err);
+        }
       } finally {
         setLoading(false);
       }
