@@ -187,11 +187,20 @@ export const AdminQuizResults: React.FC = () => {
                   <p className="text-xs text-neutral-600 dark:text-neutral-400 truncate">{r.studentEmail}</p>
                   <div className="mt-2 text-sm">
                     <span className="font-semibold text-neutral-900 dark:text-white">{r.score}/{r.totalMarks}</span>
-                    <span className={`ml-2 font-bold ${\n                      r.percentage >= 80 ? 'text-green-600 dark:text-green-400' :\n                      r.percentage >= 60 ? 'text-blue-600 dark:text-blue-400' :\n                      r.percentage >= 40 ? 'text-amber-600 dark:text-amber-400' :\n                      'text-red-600 dark:text-red-400'\n                    }`}>{Math.round(r.percentage)}%</span>
+                    <span className={`ml-2 font-bold ${
+                      r.percentage >= 80 ? 'text-green-600 dark:text-green-400' :
+                      r.percentage >= 60 ? 'text-blue-600 dark:text-blue-400' :
+                      r.percentage >= 40 ? 'text-amber-600 dark:text-amber-400' :
+                      'text-red-600 dark:text-red-400'
+                    }`}>{Math.round(r.percentage)}%</span>
                   </div>
                   <div className="mt-1 text-xs text-neutral-600 dark:text-neutral-400">{formatTime(r.timeTaken)} • {formatDate(r.completedAt)}</div>
                 </div>
-                <div className=\"flex-shrink-0\">\n                  <span className={`inline-block w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${getGradeColor(r.percentage)}`}>\n                    {getGradeBadge(r.percentage)}\n                  </span>\n                </div>
+                <div className="flex-shrink-0">
+                  <span className={`inline-block w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${getGradeColor(r.percentage)}`}>
+                    {getGradeBadge(r.percentage)}
+                  </span>
+                </div>
               </div>
             </div>
           ))}
