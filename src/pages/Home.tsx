@@ -48,9 +48,10 @@ export const Home: React.FC = () => {
               variant="outline"
               size="sm"
               onClick={() => navigate('/admin/login')}
-              className="text-red-600 border-red-600 hover:bg-red-50 dark:text-red-400 dark:border-red-400 hidden sm:flex"
+              className="text-red-600 border-red-600 hover:bg-red-50 dark:text-red-400 dark:border-red-400 dark:hover:bg-red-900/20 flex-shrink-0"
             >
-              Admin
+              <span className="hidden sm:inline">Admin</span>
+              <span className="sm:hidden">👤</span>
             </Button>
           </div>
         </div>
