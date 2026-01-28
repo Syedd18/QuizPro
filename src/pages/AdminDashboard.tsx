@@ -115,7 +115,7 @@ export const AdminDashboard: React.FC = () => {
         </div>
 
         {/* Quick Actions */}
-        <div className="mb-6 sm:mb-12 flex flex-col sm:flex-row gap-2 sm:gap-4">
+        <div className="mb-6 sm:mb-12 grid grid-cols-2 sm:flex sm:flex-row gap-2 sm:gap-4">
           <Button
             variant="primary"
             icon={<Plus size={16} className="sm:w-[18px] sm:h-[18px]" />}
@@ -130,7 +130,8 @@ export const AdminDashboard: React.FC = () => {
             onClick={() => navigate('/admin/quizzes')}
             className="w-full sm:w-auto text-xs sm:text-sm"
           >
-            Manage Quizzes
+            <span className="hidden sm:inline">Manage Quizzes</span>
+            <span className="sm:hidden">Manage</span>
           </Button>
         </div>
 

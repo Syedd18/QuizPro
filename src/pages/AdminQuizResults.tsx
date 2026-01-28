@@ -138,30 +138,31 @@ export const AdminQuizResults: React.FC = () => {
     <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950">
       {/* Header */}
       <header className="bg-white dark:bg-neutral-800 border-b border-neutral-200 dark:border-neutral-700 sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-3 sm:px-4 py-3 sm:py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 py-2.5 sm:py-4 flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
             <Button
               variant="ghost"
               size="sm"
               onClick={() => navigate('/admin/quizzes')}
-              icon={<ArrowLeft size={20} />}
+              icon={<ArrowLeft size={18} className="sm:w-5 sm:h-5" />}
+              className="p-1.5 sm:p-2"
             >
-              <span className="hidden sm:inline">Back</span>
+              <span className="hidden sm:inline text-xs sm:text-sm">Back</span>
             </Button>
-            <div className="w-10 h-10 bg-red-600 dark:bg-red-700 rounded-lg flex items-center justify-center">
-              <BarChart3 size={24} className="text-white" />
+            <div className="w-8 sm:w-10 h-8 sm:h-10 bg-red-600 dark:bg-red-700 rounded-lg flex items-center justify-center flex-shrink-0">
+              <BarChart3 size={20} className="sm:w-6 sm:h-6 text-white" />
             </div>
-            <div>
-              <h1 className="text-lg sm:text-2xl font-bold text-neutral-900 dark:text-white">Quiz Results</h1>
-              <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400">{quiz?.title}</p>
+            <div className="min-w-0 flex-1">
+              <h1 className="text-base sm:text-2xl font-bold text-neutral-900 dark:text-white truncate">Quiz Results</h1>
+              <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 truncate">{quiz?.title}</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
             <ThemeToggle />
-            <Button variant="ghost" size="sm" onClick={handleLogout}>
-              <LogOut size={18} />
-              Logout
+            <Button variant="ghost" size="sm" onClick={handleLogout} className="text-xs sm:text-sm">
+              <LogOut size={16} className="sm:w-[18px] sm:h-[18px]" />
+              <span className="hidden sm:inline">Logout</span>
             </Button>
           </div>
         </div>
@@ -180,25 +181,17 @@ export const AdminQuizResults: React.FC = () => {
         <div className="sm:hidden space-y-3 mb-4">
           {results.map((r) => (
             <div key={r.id} className="card p-3">
-              <div className="flex items-start justify-between gap-3">
+              <div className="flex items-start justify-between gap-2">
                 <div className="flex-1 min-w-0">
-                  <p className="font-semibold truncate">{r.studentName}</p>
-                  <p className="text-xs text-neutral-600 truncate">{r.studentEmail}</p>
+                  <p className="text-sm font-semibold truncate text-neutral-900 dark:text-white">{r.studentName}</p>
+                  <p className="text-xs text-neutral-600 dark:text-neutral-400 truncate">{r.studentEmail}</p>
                   <div className="mt-2 text-sm">
-                    <span className="font-semibold">{r.score}/{r.totalMarks}</span>
-                    <span className="text-neutral-600 ml-2">{Math.round(r.percentage)}%</span>
+                    <span className="font-semibold text-neutral-900 dark:text-white">{r.score}/{r.totalMarks}</span>
+                    <span className={`ml-2 font-bold ${\n                      r.percentage >= 80 ? 'text-green-600 dark:text-green-400' :\n                      r.percentage >= 60 ? 'text-blue-600 dark:text-blue-400' :\n                      r.percentage >= 40 ? 'text-amber-600 dark:text-amber-400' :\n                      'text-red-600 dark:text-red-400'\n                    }`}>{Math.round(r.percentage)}%</span>
                   </div>
-                  <div className="mt-1 text-xs text-neutral-600">{formatTime(r.timeTaken)} • {formatDate(r.completedAt)}</div>
+                  <div className="mt-1 text-xs text-neutral-600 dark:text-neutral-400">{formatTime(r.timeTaken)} • {formatDate(r.completedAt)}</div>
                 </div>
-                <div className="flex-shrink-0">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => navigate(`/results/${quiz?.id}`, { state: { attemptId: r.attemptId, score: r.score, totalMarks: r.totalMarks } })}
-                  >
-                    View
-                  </Button>
-                </div>
+                <div className=\"flex-shrink-0\">\n                  <span className={`inline-block w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${getGradeColor(r.percentage)}`}>\n                    {getGradeBadge(r.percentage)}\n                  </span>\n                </div>
               </div>
             </div>
           ))}
@@ -230,20 +223,20 @@ export const AdminQuizResults: React.FC = () => {
 
         {/* Results Table */}
         {results.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-neutral-600 dark:text-neutral-400">No student results yet for this quiz.</p>
+          <div className="text-center py-8 sm:py-12">
+            <p className="text-xs sm:text-base text-neutral-600 dark:text-neutral-400">No student results yet for this quiz.</p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-xs sm:text-sm">
+          <div className="overflow-x-auto -mx-3 sm:mx-0">
+            <table className="w-full text-xs sm:text-sm hidden sm:table">
               <thead className="bg-neutral-100 dark:bg-neutral-800 border-b border-neutral-200 dark:border-neutral-700">
                 <tr>
                   <th className="px-3 sm:px-4 py-3 text-left font-semibold text-neutral-900 dark:text-white">Student</th>
                   <th className="px-3 sm:px-4 py-3 text-center font-semibold text-neutral-900 dark:text-white">Grade</th>
                   <th className="px-3 sm:px-4 py-3 text-right font-semibold text-neutral-900 dark:text-white">Score</th>
                   <th className="px-3 sm:px-4 py-3 text-right font-semibold text-neutral-900 dark:text-white">Percentage</th>
-                  <th className="px-3 sm:px-4 py-3 text-right font-semibold text-neutral-900 dark:text-white hidden sm:table-cell">Time Taken</th>
-                  <th className="px-3 sm:px-4 py-3 text-left font-semibold text-neutral-900 dark:text-white hidden md:table-cell">Completed</th>
+                  <th className="px-3 sm:px-4 py-3 text-right font-semibold text-neutral-900 dark:text-white hidden md:table-cell">Time Taken</th>
+                  <th className="px-3 sm:px-4 py-3 text-left font-semibold text-neutral-900 dark:text-white hidden lg:table-cell">Completed</th>
                 </tr>
               </thead>
               <tbody>
@@ -276,10 +269,10 @@ export const AdminQuizResults: React.FC = () => {
                         {Math.round(result.percentage)}%
                       </span>
                     </td>
-                    <td className="px-3 sm:px-4 py-3 text-right text-neutral-600 dark:text-neutral-400 hidden sm:table-cell">
+                    <td className="px-3 sm:px-4 py-3 text-right text-neutral-600 dark:text-neutral-400 hidden md:table-cell">
                       {formatTime(result.timeTaken)}
                     </td>
-                    <td className="px-3 sm:px-4 py-3 text-neutral-600 dark:text-neutral-400 hidden md:table-cell">
+                    <td className="px-3 sm:px-4 py-3 text-neutral-600 dark:text-neutral-400 hidden lg:table-cell">
                       <span className="text-xs">{formatDate(result.completedAt)}</span>
                     </td>
                   </tr>

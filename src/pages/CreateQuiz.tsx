@@ -149,20 +149,21 @@ export const CreateQuiz: React.FC = () => {
     <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950">
       {/* Header */}
       <header className="bg-white dark:bg-neutral-800 border-b border-neutral-200 dark:border-neutral-700 sticky top-0 z-10">
-        <div className="max-w-4xl mx-auto px-3 sm:px-4 py-3 sm:py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
+        <div className="max-w-4xl mx-auto px-3 sm:px-4 py-2.5 sm:py-4 flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
             <Button
               variant="ghost"
               size="sm"
               onClick={() => navigate('/admin/dashboard')}
-              icon={<ArrowLeft size={20} />}
+              icon={<ArrowLeft size={18} className="sm:w-5 sm:h-5" />}
+              className="p-1.5 sm:p-2"
             >
-              <span className="hidden sm:inline">Back</span>
+              <span className="hidden sm:inline text-xs sm:text-sm">Back</span>
             </Button>
-            <div className="w-10 h-10 bg-red-600 dark:bg-red-700 rounded-lg flex items-center justify-center">
-              <BookOpen size={24} className="text-white" />
+            <div className="w-8 sm:w-10 h-8 sm:h-10 bg-red-600 dark:bg-red-700 rounded-lg flex items-center justify-center flex-shrink-0">
+              <BookOpen size={20} className="sm:w-6 sm:h-6 text-white" />
             </div>
-            <h1 className="text-2xl font-bold text-neutral-900 dark:text-white">Create Quiz</h1>
+            <h1 className="text-base sm:text-2xl font-bold text-neutral-900 dark:text-white truncate">Create Quiz</h1>
           </div>
           <ThemeToggle />
         </div>
@@ -268,10 +269,10 @@ export const CreateQuiz: React.FC = () => {
                       )
                     }
                   >
-                    <h3 className="font-semibold text-neutral-900 dark:text-white">
+                    <h3 className="text-sm sm:text-base font-semibold text-neutral-900 dark:text-white">
                       Question {index + 1}
                     </h3>
-                    <div className="flex gap-2">
+                    <div className="flex gap-1 sm:gap-2">
                       <button
                         type="button"
                         onClick={(e) => {
@@ -281,7 +282,7 @@ export const CreateQuiz: React.FC = () => {
                         disabled={index === 0}
                         className="p-1 hover:bg-neutral-100 dark:hover:bg-neutral-700 rounded disabled:opacity-50"
                       >
-                        <ChevronUp size={18} />
+                        <ChevronUp size={16} className="sm:w-[18px] sm:h-[18px]" />
                       </button>
                       <button
                         type="button"
@@ -292,7 +293,7 @@ export const CreateQuiz: React.FC = () => {
                         disabled={index === questions.length - 1}
                         className="p-1 hover:bg-neutral-100 dark:hover:bg-neutral-700 rounded disabled:opacity-50"
                       >
-                        <ChevronDown size={18} />
+                        <ChevronDown size={16} className="sm:w-[18px] sm:h-[18px]" />
                       </button>
                       <button
                         type="button"
@@ -302,7 +303,7 @@ export const CreateQuiz: React.FC = () => {
                         }}
                         className="p-1 hover:bg-red-100 dark:hover:bg-red-900 rounded"
                       >
-                        <Trash2 size={18} className="text-red-600 dark:text-red-400" />
+                        <Trash2 size={16} className="sm:w-[18px] sm:h-[18px] text-red-600 dark:text-red-400" />
                       </button>
                     </div>
                   </div>
@@ -381,7 +382,7 @@ export const CreateQuiz: React.FC = () => {
               type="button"
               variant="outline"
               onClick={() => navigate('/admin/quizzes')}
-              className="w-full sm:w-auto"
+              className="w-full sm:w-auto text-sm sm:text-base"
             >
               Cancel
             </Button>
@@ -389,7 +390,7 @@ export const CreateQuiz: React.FC = () => {
               type="submit"
               variant="primary"
               disabled={loading}
-              className="w-full sm:w-auto"
+              className="w-full sm:w-auto text-sm sm:text-base"
             >
               {loading ? 'Creating...' : 'Create Quiz'}
             </Button>
