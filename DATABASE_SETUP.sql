@@ -40,7 +40,6 @@ CREATE TABLE IF NOT EXISTS public.questions (
   updated_at TIMESTAMP DEFAULT NOW()
 );
 
--- Create quiz attempts table
 CREATE TABLE IF NOT EXISTS public.quiz_attempts (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   student_id UUID NOT NULL,
