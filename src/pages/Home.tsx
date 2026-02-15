@@ -181,7 +181,7 @@ export const Home: React.FC = () => {
       {/* Footer */}
       <footer className="border-t border-neutral-200 dark:border-neutral-700 mt-16 sm:mt-20 bg-neutral-50 dark:bg-neutral-900 transition-colors duration-300">
         <div className="container-max py-8 text-center text-neutral-600 dark:text-neutral-400 text-sm">
-          <p>© 2026 QuizPro. Made by Anany Singh</p>
+          <p>© 2026 QuizPro.</p>
         </div>
       </footer>
     </div>
