@@ -4,6 +4,25 @@ A production-ready online quiz platform built with React, TypeScript, Tailwind C
 
 ---
 
+<p align="center">
+  <img src="public/logo.png" alt="QuizPro Logo" width="140"/>
+</p>
+
+<h1 align="center">QuizPro</h1>
+
+<p align="center">
+  <b>Production-ready Online Quiz Platform</b><br/>
+  Built with React, TypeScript, Tailwind CSS, Vite, and Supabase.
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/React-18.2-61DAFB?logo=react&logoColor=white" />
+  <img src="https://img.shields.io/badge/TypeScript-5.2-3178C6?logo=typescript&logoColor=white" />
+  <img src="https://img.shields.io/badge/Vite-5.0-646CFF?logo=vite&logoColor=white" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-3.3-06B6D4?logo=tailwindcss&logoColor=white" />
+  <img src="https://img.shields.io/badge/Supabase-Backend-3ECF8E?logo=supabase&logoColor=white" />
+</p>
+
 ## Table of Contents
 
 - [Overview](#overview)
