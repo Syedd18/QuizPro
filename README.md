@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="public/logo.png" alt="QuizPro Logo" width="140"/>
-</p>
-
 <h1 align="center">QuizPro</h1>
 
 <p align="center">
