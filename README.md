@@ -1,9 +1,3 @@
-# QuizPro
-
-A production-ready online quiz platform built with React, TypeScript, Tailwind CSS, and Vite. Supports separate student and admin workflows, real-time quiz-taking, and a fully responsive mobile-first interface.
-
----
-
 <p align="center">
   <img src="public/logo.png" alt="QuizPro Logo" width="140"/>
 </p>
