@@ -1,238 +1,213 @@
-# QuizPro - Professional Online Quiz Platform
+# QuizPro
 
-An industry-grade, production-quality online quiz system built with **React**, **TypeScript**, **Tailwind CSS**, and **Vite**. Features secure authentication, real-time quiz interface, comprehensive admin panel, and fully responsive mobile-first design.
+A production-ready online quiz platform built with React, TypeScript, Tailwind CSS, and Vite. Supports separate student and admin workflows, real-time quiz-taking, and a fully responsive mobile-first interface.
 
-## 🚀 Quick Start
+---
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Features](#features)
+- [Technology Stack](#technology-stack)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+- [Authentication](#authentication)
+- [User Flows](#user-flows)
+- [Component Reference](#component-reference)
+- [Accessibility](#accessibility)
+
+---
+
+## Overview
+
+QuizPro provides two distinct interfaces — one for students and one for administrators — with role-based route protection, session management, and an optional Supabase backend. The UI is built around a single-question-per-screen model to minimize cognitive load during quiz-taking.
+
+---
+
+## Features
+
+### Student
+
+- Registration and login with form validation
+- Dashboard displaying all published quizzes
+- Single-question quiz interface with a real-time countdown timer
+- Automatic submission on timer expiry
+- Detailed results page with per-question answer review
+- Full attempt history with score statistics
+
+### Admin
+
+- Separate admin login with protected routes
+- Create, edit, publish, and delete quizzes
+- Add multiple-choice questions with explanations
+- Dashboard with quiz metrics and student activity overview
+
+### Platform
+
+- Glassmorphic design system with smooth CSS animations
+- Mobile-first layout with 44px minimum touch targets
+- Full dark mode support
+- WCAG AA–compliant accessibility
+- Optimized production bundle (~11.25 kB gzipped CSS)
+
+---
+
+## Technology Stack
+
+| Layer | Technology |
+|---|---|
+| UI Library | React 18.2 |
+| Language | TypeScript 5.2 |
+| Styling | Tailwind CSS 3.3 |
+| Build Tool | Vite 5.0 |
+| Routing | React Router 6.18 |
+| Icons | Lucide React 0.294 |
+| Backend (optional) | Supabase |
+| CSS Processing | PostCSS |
+
+---
+
+## Project Structure
+
+```
+src/
+├── components/             # Reusable UI primitives
+│   ├── Alert.tsx
+│   ├── Button.tsx
+│   ├── FormInput.tsx
+│   ├── Header.tsx
+│   ├── ProgressBar.tsx
+│   ├── ProtectedRoute.tsx
+│   ├── QuizCard.tsx
+│   ├── ThemeToggle.tsx
+│   └── Timer.tsx
+├── contexts/               # React context providers
+│   ├── AuthContext.tsx
+│   └── ThemeContext.tsx
+├── data/
+│   └── mockData.ts         # Development mock data
+├── hooks/                  # Custom React hooks
+│   ├── useForm.ts
+│   ├── useLocalStorage.ts
+│   └── useTimer.ts
+├── lib/                    # External service clients
+│   ├── database.ts
+│   └── supabase.ts
+├── pages/                  # Route-level page components
+│   ├── Admin.tsx
+│   ├── AdminDashboard.tsx
+│   ├── AdminLogin.tsx
+│   ├── AdminQuizManagement.tsx
+│   ├── ConfirmEmail.tsx
+│   ├── CreateQuiz.tsx
+│   ├── Dashboard.tsx
+│   ├── Home.tsx
+│   ├── Login.tsx
+│   ├── Quiz.tsx
+│   ├── QuizHistory.tsx
+│   ├── Register.tsx
+│   └── Results.tsx
+├── types/
+│   └── index.ts            # Shared TypeScript types
+└── App.tsx
+```
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 16 or later
+- npm or yarn
 
 ### Installation
+
 ```bash
 npm install
 ```
 
 ### Development
+
 ```bash
 npm run dev
 ```
-Open [http://localhost:3001](http://localhost:3001) in your browser.
 
-### Production Build
+The dev server starts at [http://localhost:3001](http://localhost:3001).
+
+### Production
+
 ```bash
 npm run build
 npm run preview
 ```
 
-## ✨ Key Features
+---
 
-### Student Features
-- **Authentication** - Secure login/registration with validation
-- **Quiz Dashboard** - Browse published quizzes with descriptions
-- **Quiz Interface** - Single-question-per-screen layout with real-time timer
-- **Results Review** - Detailed score breakdown with answer analysis
-- **Quiz History** - Track all previous attempts and statistics
-- **Responsive Design** - Optimized for phone, tablet, and desktop
+## Authentication
 
-### Admin Features
-- **Quiz Management** - Create, edit, publish/unpublish quizzes
-- **Question Management** - Add multiple choice questions with explanations
-- **Admin Dashboard** - View statistics and quiz metrics
-- **Back Navigation** - Easy navigation between admin pages
+### Students
 
-### Technical Features
-- 🎨 **Premium UI/UX** - Modern glassmorphic design with smooth animations
-- 📱 **Mobile-First** - Touch-friendly interface (44px minimum touch targets)
-- ♿ **Accessible** - WCAG compliant keyboard navigation support
-- 🌓 **Dark Mode** - Full dark theme support
-- ⚡ **Performance** - Optimized bundle size (~11.25 kB gzipped CSS)
-- 🔒 **Protected Routes** - Role-based access control
+Students register with an email address and a password of six or more characters. Sessions are stored in the browser using JWT tokens. All student routes beyond the login page are protected and will redirect unauthenticated users.
 
-## 🏗️ Project Structure
+### Admins
 
-```
-src/
-├── components/          # Reusable UI components
-│   ├── Button.tsx      # Multi-variant button (5 styles)
-│   ├── FormInput.tsx   # Form inputs with validation
-│   ├── Timer.tsx       # Countdown timer
-│   ├── ProgressBar.tsx # Quiz progress indicator
-│   ├── QuizCard.tsx    # Quiz card component
-│   ├── Alert.tsx       # Alert/notification
-│   ├── Header.tsx      # App header with nav
-│   ├── ThemeToggle.tsx # Dark/light mode toggle
-│   └── ProtectedRoute.tsx # Route protection
-├── pages/               # Page components
-│   ├── Home.tsx        # Landing page
-│   ├── Login.tsx       # Student login
-│   ├── Register.tsx    # Student registration
-│   ├── ConfirmEmail.tsx# Email confirmation
-│   ├── Dashboard.tsx   # Quiz listing dashboard
-│   ├── Quiz.tsx        # Quiz interface
-│   ├── Results.tsx     # Results & answer review
-│   ├── QuizHistory.tsx # Attempt history
-│   ├── AdminLogin.tsx  # Admin login
-│   ├── AdminDashboard.tsx # Admin hub
-│   ├── AdminQuizManagement.tsx # Quiz management
-│   ├── CreateQuiz.tsx  # Quiz creation
-│   └── Admin.tsx       # Admin panel
-├── contexts/           # React context providers
-│   ├── AuthContext.tsx # Authentication context
-│   └── ThemeContext.tsx # Dark/light theme
-├── hooks/              # Custom React hooks
-│   ├── useForm.ts      # Form handling
-│   ├── useTimer.ts     # Timer logic
-│   └── useLocalStorage.ts # Local storage hook
-├── lib/                # Library & utilities
-│   ├── database.ts     # Supabase integration
-│   └── supabase.ts     # Supabase client
-├── types/              # TypeScript definitions
-│   └── index.ts        # Shared types
-├── data/               # Mock data
-│   └── mockData.ts     # Test data
-└── App.tsx             # Main app 
+Admins log in through a separate route (`/admin/login`). Admin routes are protected by role-based access control and are inaccessible to student sessions.
 
-## 🔐 Authentication
+---
 
-### Student Login
-- Demo credentials: Use any email and 6+ character password
-- Session stored in browser with JWT tokens
-- Protected routes enforce authentication
-
-
-
-## 📊 Navigation Flow
-
-```
-Home/Public
-├── Student Path
-│   ├── Login → Dashboard → [Quiz/History/Results]
-│   └── Register → Email Confirmation
-└── Admin Path
-    ├── Admin Login → Admin Dashboard
-    └── Admin Dashboard → [Quiz Management/Create Quiz]
-```
-
-
-## 🎯 User Flows
+## User Flows
 
 ### Taking a Quiz
-1. Login to dashboard
-2. Select quiz from dashboard
-3. Answer questions one per screen
-4. Submit quiz (auto-submits when time expires)
-5. View results with score breakdown
-6. Review correct/incorrect answers
-7. Access quiz history for all attempts
 
-### Creating Quiz (Admin)
-1. Admin Login with admin credentials
-2. Go to Admin Dashboard → Create Quiz
-3. Add quiz details (title, time limit, marks)
-4. Add multiple choice questions with explanations
-5. Publish quiz to make available to students
+1. Log in and open the student dashboard.
+2. Select a published quiz.
+3. Answer each question — one per screen — using Previous / Next navigation.
+4. Submit manually or allow the timer to auto-submit.
+5. Review your score breakdown and per-question analysis on the results page.
+6. Access all past attempts from the Quiz History page.
 
-## 🛠️ Technology Stack
+### Creating a Quiz (Admin)
 
-- **React 18.2** - UI library with hooks
-- **TypeScript 5.2** - Type safety and IntelliSense
-- **Tailwind CSS 3.3** - Utility-first CSS framework
-- **Vite 5.0** - Fast build tool (3s cold start)
-- **React Router 6.18** - Client-side routing
-- **Lucide React 0.294** - Icon library
-- **Supabase** - Backend/Database (optional)
-- **PostCSS** - CSS processing
+1. Log in through the admin login page.
+2. Navigate to **Admin Dashboard → Create Quiz**.
+3. Enter quiz details: title, time limit, and total marks.
+4. Add multiple-choice questions with optional explanations.
+5. Publish the quiz to make it visible to students.
 
+### Navigation Map
 
+```
+/
+├── /login              → /dashboard
+│   └── /quiz/:id       → /results/:id
+│   └── /history
+└── /register           → /confirm-email
 
-## 🎯 Feature Details
-
-### Quiz Interface
-- **Single Question View** - One question per screen for focus
-- **Navigation** - Previous/Next buttons with state preservation
-- **Real-time Timer** - Visual countdown with warning states (red alert at 10s)
-- **Progress Tracking** - Visual progress bar showing completion percentage
-
-### Results Page
-- **Score Breakdown** - Percentage score, marks earned, correct/wrong/unanswered count
-- **Answer Review** - See all questions with selected vs correct answers
-- **Color-Coded** - Green for correct, red for incorrect, gray for unanswered
-- **Back Navigation** - Easy return to dashboard or quiz history
-- **Print Preview** - Print-friendly results format
-
-### Admin Panel
-- **Quiz CRUD** - Create, read, update, delete operations
-- **Publish Control** - Toggle quiz availability to students
-- **Statistics** - View quiz metrics and student performance
-- **Question Management** - Add/edit MCQ with explanations
-- **Dashboard** - Overview of all quizzes and student activity
-
-### Quiz History
-- **Attempt Tracking** - All previous quiz attempts with dates
-- **Statistics** - Personal attempt statistics (average score, total attempts)
-- **Performance Chart** - Visual representation of score trends
-- **Quick Review** - Quick access to view previous results
-
-## 🔄 Navigation Features
-
-Every page includes context-appropriate back buttons:
-- Uses ArrowLeft icon from lucide-react
-- Ghost button variant (minimal styling)
-- Hidden text on mobile (visible on desktop)
-- Navigates to logical previous screen (Last page, Admin Dashboard, Home, etc.)
-
-Example:
-```tsx
-<Button 
-  variant="ghost" 
-  size="sm" 
-  onClick={() => navigate('/dashboard')}
-  icon={<ArrowLeft size={20} />}
->
-  <span className="hidden sm:inline">Back</span>
-</Button>
+/admin/login            → /admin
+    └── /admin/quizzes  → /admin/quizzes/create
 ```
 
-## 💅 CSS Architecture
+---
 
-**Tailwind CSS + Custom Layers**
-- Component layer: `.btn-*`, `.input-field`, `.card-*`
-- Utility layer: Custom responsive utilities
-- Base layer: Global resets and animations
+## Component Reference
 
-**Animations**
-- `fadeIn` - Opacity transitions
-- `slideUp` - Bottom-to-top motion
-- `scaleIn` - Scale growth effect
-- `float` - Floating elevation effect
-- `glow` - Pulsing glow effect
-- `shimmer` - Loading shimmer effect
+### Button
 
-## ♿ Accessibility
-
-- ✅ Semantic HTML structure
-- ✅ ARIA labels and roles
-- ✅ Keyboard navigation throughout
-- ✅ Focus indicators on all interactive elements
-- ✅ Form validation with clear error messages
-- ✅ Screen reader friendly components
-- ✅ 44px+ touch targets on mobile
-- ✅ High contrast text (WCAG AA)
-- ✅ Dark mode support for reduced eye strain
-
-## 🧪 Component Usage Examples
-
-### Button Component
 ```tsx
 <Button
   variant="primary" | "secondary" | "outline" | "ghost" | "danger"
   size="sm" | "md" | "lg"
   isLoading={boolean}
-  icon={<IconComponent size={20} />}
+  icon={<Icon size={20} />}
   onClick={handler}
 >
-  Button Text
+  Label
 </Button>
 ```
 
-### FormInput Component
+### FormInput
+
 ```tsx
 <FormInput
   label="Email"
@@ -242,55 +217,46 @@ Example:
   value={value}
   onChange={handler}
   error={errorMessage}
-  required={true}
+  required
 />
 ```
 
-### Alert Component
+### Alert
+
 ```tsx
 <Alert
   type="success" | "error" | "warning" | "info"
   title="Title"
-  message="Alert message"
+  message="Description"
   onClose={handler}
 />
 ```
 
-## 🚀 Setup Instructions
+### Back Navigation (pattern)
 
-### Prerequisites
-- Node.js 16+ 
-- npm or yarn
-- Modern web browser
+Every page uses a consistent back-navigation pattern:
 
-### Installation Steps
+```tsx
+<Button
+  variant="ghost"
+  size="sm"
+  onClick={() => navigate('/dashboard')}
+  icon={<ArrowLeft size={20} />}
+>
+  <span className="hidden sm:inline">Back</span>
+</Button>
+```
 
-1. **Extract Project**
-   ```bash
-   cd "Online Quiz"
-   ```
+---
 
-2. **Install Dependencies**
-   ```bash
-   npm install
-   ```
+## Accessibility
 
-3. **Start Development Server**
-   ```bash
-   npm run dev
-   ```
-   Opens at `http://localhost:3001`
+QuizPro targets WCAG 2.1 AA compliance across all views.
 
-4. **Build for Production**
-   ```bash
-   npm run build
-   ```
-
-5. **Preview Production Build**
-   ```bash
-   npm run preview
-   ```
-
-
-
-
+- Semantic HTML throughout
+- ARIA labels and roles on interactive elements
+- Full keyboard navigation with visible focus indicators
+- Form validation with descriptive inline error messages
+- Screen-reader–friendly component structure
+- 44px minimum touch targets on mobile
+- High-contrast text in both light and dark themes
